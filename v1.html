@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500;600&family=Vollkorn:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; padding: 0; background: #f7ebdf; }
+    * { box-sizing: border-box; }
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid #f5ac3c; outline-offset: 3px; }
+    ::selection { background: rgba(245,172,60,0.35); }
+    [data-rail]::-webkit-scrollbar { display: none; }
+    @keyframes curtain-lift { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+    @keyframes line-up { from { transform: translateY(112%); } to { transform: translateY(0); } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes ken-burns { from { transform: scale(1); } to { transform: scale(1.06); } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes scroll-line { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+    @media (prefers-reduced-motion: reduce) {
+      [data-anim] { animation: none !important; }
+      [data-curtain] { display: none !important; }
+    }
+  </style>
+</helmet>
+
+<header data-screen-label="Header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 60; background-color: {{ headerBg }}; backdrop-filter: {{ headerBlur }}; box-shadow: {{ headerShadow }}; transition: background-color 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
+  <div style="max-width: 1320px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px clamp(20px, 5vw, 48px);">
+    <a href="#hero" style="display: block;"><img src="assets/{{ headerLogo }}" alt="Comet Meetings" style="height: 24px; display: block;"></a>
+    <nav aria-label="Navigation principale" style="display: flex; gap: clamp(18px, 3vw, 36px); flex-wrap: wrap; justify-content: center;">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="5">
+        <a href="{{ l.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; color: {{ headerColor }}; text-decoration: none; transition: opacity 140ms;" style-hover="opacity: 0.7;">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+    <a href="tel:+33184806060" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; color: {{ headerColor }}; text-decoration: none; white-space: nowrap;">01 84 80 60 60</a>
+  </div>
+</header>
+
+<section id="hero" data-screen-label="01 Hero" style="position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: #1d3d49;">
+  <div data-anim style="position: absolute; inset: 0; will-change: transform; animation: {{ kenBurnsAnim }};" style-hover="animation-play-state: paused;">
+    <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="hero-signature" shape="rect" src="https://cdn.sanity.io/images/g8jgfkf5/production/d9b36155b18116ba0e919251e7ba65ab6badc1a3-7005x4670.jpg?w=2400&amp;auto=format" placeholder="Photo signature pleine largeur" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
+  </div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(33,72,86,0.66) 0%, rgba(33,72,86,0.22) 36%, rgba(33,72,86,0) 58%); pointer-events: none;"></div>
+  <div data-curtain aria-hidden="true" style="position: absolute; inset: 0; background: #f7ebdf; z-index: 2; pointer-events: none; animation: curtain-lift 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;"></div>
+  <div style="position: relative; z-index: 3; height: 100%; max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(64px, 11vh, 120px); display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;">
+    <p data-anim style="margin: 0 0 20px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(253,247,238,0.85); animation: fade-up 600ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both;">Paris · Bruxelles · Madrid</p>
+    <h1 style="margin: 0 0 24px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2.75rem, 6vw, 5.5rem); line-height: 1.08; letter-spacing: -0.01em; color: #fdf7ee; max-width: 14em;">
+      <span style="display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em;"><span data-anim style="display: block; animation: line-up 800ms cubic-bezier(0.16, 1, 0.3, 1) 380ms both;">Trouvez le lieu <span style="font-family: 'Caveat', cursive; font-weight: 600; font-style: normal; color: #f5ac3c; font-size: 1.08em; line-height: 1;">parfait</span></span></span>
+      <span style="display: block; overflow: hidden; padding-bottom: 0.12em;"><span data-anim style="display: block; animation: line-up 800ms cubic-bezier(0.16, 1, 0.3, 1) 460ms both;">pour vos événements professionnels</span></span>
+    </h1>
+    <p data-anim style="margin: 0 0 32px; max-width: 36em; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.6; color: rgba(253,247,238,0.85); animation: fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;">De 2 à plus de 500 personnes, pour vos réunions, séminaires, formations et afterworks.</p>
+    <div data-anim style="animation: fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) 850ms both;">
+      <a href="#contact" style="display: inline-flex; align-items: center; gap: 10px; background: #f5ac3c; color: #214856; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; padding: 17px 30px; border-radius: 999px; text-decoration: none; transition: background 220ms cubic-bezier(0.22,0.61,0.36,1), gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28; gap: 16px;">Mon devis en 2 minutes <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; bottom: 28px; left: 50%; margin-left: -0.5px; z-index: 3; width: 1px; height: 52px; overflow: hidden;">
+    <div data-anim style="width: 1px; height: 100%; background: rgba(253,247,238,0.65); animation: scroll-line 2.4s cubic-bezier(0.65, 0, 0.35, 1) 1.4s infinite;"></div>
+  </div>
+</section>
+
+<section id="manifeste" data-screen-label="02 Manifeste" style="background: #f7ebdf; padding: clamp(110px, 16vw, 210px) 24px;">
+  <p style="margin: 0 auto 28px; text-align: center; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a3a;">Le manifeste</p>
+  <p data-manifesto style="max-width: 760px; margin: 0 auto; text-align: center; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.75rem, 3.2vw, 2.75rem); line-height: 1.35; color: #214856;">
+    <span data-mword style="display: inline-block;">«&nbsp;Rassembler</span> <span data-mword style="display: inline-block;">les humains</span> <span data-mword style="display: inline-block;">dans un monde</span> <span data-mword style="display: inline-block;">qui les éloigne.&nbsp;»</span>
+  </p>
+</section>
+
+<section data-screen-label="03 Preuve" style="background: #fdf7ee; border-top: 1px solid rgba(33,72,86,0.07); border-bottom: 1px solid rgba(33,72,86,0.07); padding: clamp(70px, 9vw, 120px) 0;">
+  <p data-reveal style="max-width: 860px; margin: 0 auto clamp(48px, 6vw, 72px); padding: 0 24px; text-align: center; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.4rem, 2.4vw, 2rem); line-height: 1.45; color: #214856;">Déjà plus de <span data-counter style="font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap;">1 000 000</span> de participants accueillis en 10 ans, dans 3 pays.</p>
+  <div style="overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
+    <div data-anim style="display: flex; align-items: center; gap: clamp(56px, 8vw, 110px); width: max-content; padding-right: clamp(56px, 8vw, 110px); animation: marquee 60s linear infinite;" style-hover="animation-play-state: paused;">
+      <sc-for list="{{ logosLoop }}" as="lg" hint-placeholder-count="8">
+        <img src="{{ lg.src }}" alt="{{ lg.name }}" style="height: {{ lg.h }}; width: auto; max-width: 130px; object-fit: contain; display: block; filter: grayscale(1) brightness(0.5); opacity: 0.55;">
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="experiences" data-screen-label="04 Expériences" style="background: #f7ebdf; padding: clamp(90px, 12vw, 160px) 0 0;">
+  <div data-reveal style="max-width: 1320px; margin: 0 auto clamp(48px, 6vw, 80px); padding: 0 clamp(20px, 5vw, 48px);">
+    <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a3a;">Nos expériences</p>
+    <h2 style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.01em; color: #214856; max-width: 14em;">Les expériences Comet</h2>
+  </div>
+  <sc-for list="{{ experiences }}" as="exp" hint-placeholder-count="3">
+    <article data-reveal data-screen-label="Expérience {{ exp.title }}" style="position: relative; width: 100%; height: min(70vh, 720px); overflow: hidden; background: #24505f;">
+      <div data-parallax style="position: absolute; top: -8%; bottom: -8%; left: 0; right: 0; will-change: transform;">
+        <div style="position: absolute; inset: 0; transition: transform 500ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;" style-hover="transform: scale(1.03);">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ exp.slot }}" shape="rect" src="{{ exp.src }}" placeholder="{{ exp.ph }}" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
+        </div>
+      </div>
+      <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(33,72,86,0.62) 0%, rgba(33,72,86,0.12) 42%, rgba(33,72,86,0) 60%); pointer-events: none;"></div>
+      <div style="position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: {{ exp.justify }}; padding: clamp(28px, 5vw, 72px); pointer-events: none;">
+        <div style="max-width: 560px;">
+          <p style="margin: 0 0 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; color: rgba(253,247,238,0.7);">{{ exp.n }}</p>
+          <h3 style="margin: 0 0 12px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1.05; color: #fdf7ee;">{{ exp.title }}</h3>
+          <p style="margin: 0 0 20px; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.6; color: rgba(253,247,238,0.85);">{{ exp.desc }}</p>
+          <a href="{{ exp.href }}" style="pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: #fdf7ee; text-decoration: none; border-bottom: 1px solid rgba(253,247,238,0.4); padding-bottom: 4px; transition: gap 220ms cubic-bezier(0.22,0.61,0.36,1), border-color 220ms;" style-hover="gap: 14px; border-bottom-color: #f5ac3c;">{{ exp.cta }} <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </article>
+  </sc-for>
+</section>
+
+<section id="lieux" data-screen-label="05 Lieux" style="background: #f7ebdf; padding: clamp(90px, 12vw, 160px) 0;">
+  <div data-reveal style="max-width: 1320px; margin: 0 auto clamp(40px, 5vw, 64px); padding: 0 clamp(20px, 5vw, 48px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+    <div>
+      <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a3a;">Nos lieux</p>
+      <h2 style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.01em; color: #214856;">À Paris, Bruxelles et Madrid</h2>
+    </div>
+    <a href="https://comet-next-web.vercel.app/lieux" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: #214856; text-decoration: none; border-bottom: 1px solid #f5ac3c; padding-bottom: 4px; transition: gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="gap: 14px;">Découvrir tous nos lieux <span aria-hidden="true">→</span></a>
+  </div>
+  <div data-rail tabindex="0" role="region" aria-label="Nos lieux, liste à faire défiler horizontalement" style="display: flex; gap: clamp(14px, 2vw, 24px); overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px clamp(20px, 5vw, 48px) 8px; cursor: grab; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+    <sc-for list="{{ lieux }}" as="lieu" hint-placeholder-count="6">
+      <a href="{{ lieu.href }}" draggable="false" style="flex: none; position: relative; display: block; width: min(76vw, calc(70vh * 0.8)); height: min(70vh, 680px); scroll-snap-align: start; overflow: hidden; background: #24505f; text-decoration: none;">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ lieu.slot }}" shape="rect" src="{{ lieu.src }}" placeholder="{{ lieu.ph }}" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;"></x-import>
+        <span aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(33,72,86,0.62) 0%, rgba(33,72,86,0) 38%); pointer-events: none;"></span>
+        <span style="position: absolute; left: 24px; right: 24px; bottom: 24px; pointer-events: none;">
+          <span style="display: block; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.15; color: #fdf7ee;">{{ lieu.name }}</span>
+          <span style="display: block; margin-top: 6px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(253,247,238,0.75);">{{ lieu.city }}</span>
+        </span>
+      </a>
+    </sc-for>
+  </div>
+  <div style="max-width: 1320px; margin: clamp(24px, 3vw, 40px) auto 0; padding: 0 clamp(20px, 5vw, 48px);">
+    <div style="height: 2px; background: rgba(33,72,86,0.12); border-radius: 999px; overflow: hidden;">
+      <div data-rail-bar style="height: 100%; width: 20%; background: #f5ac3c; border-radius: 999px; transition: width 120ms linear;"></div>
+    </div>
+  </div>
+</section>
+
+<section id="temoignages" data-screen-label="06 Témoignages" style="background: #214856; padding: clamp(100px, 14vw, 180px) 24px;">
+  <div data-reveal style="max-width: 920px; margin: 0 auto; text-align: center;">
+    <h2 style="margin: 0 0 clamp(40px, 5vw, 64px); font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(253,247,238,0.6);">Ils nous ont fait confiance.</h2>
+    <div style="min-height: 300px; display: flex; flex-direction: column; justify-content: center; opacity: {{ tOpacity }}; transition: opacity 300ms cubic-bezier(0.22,0.61,0.36,1);">
+      <p style="margin: 0 0 24px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #f5ac3c;">{{ tCompany }}</p>
+      <blockquote style="margin: 0 0 36px; font-family: 'Vollkorn', serif; font-style: italic; font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1.4; color: #fdf7ee;">«&nbsp;{{ tQuote }}&nbsp;»</blockquote>
+      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #fdf7ee;">{{ tName }}</p>
+      <p style="margin: 6px 0 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(253,247,238,0.6);">{{ tRole }}</p>
+      <sc-if value="{{ tHasVideo }}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 24px 0 0;"><a href="{{ tVideoHref }}" target="_blank" rel="noopener" style="display: inline-block; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 13px; color: rgba(253,247,238,0.8); text-decoration: none; border: 1px solid rgba(253,247,238,0.3); border-radius: 999px; padding: 10px 20px; transition: border-color 220ms, color 220ms;" style-hover="border-color: #f5ac3c; color: #fdf7ee;">Voir le témoignage</a></p>
+      </sc-if>
+    </div>
+    <div style="margin-top: clamp(36px, 5vw, 56px); display: flex; align-items: center; justify-content: center; gap: 28px;">
+      <button type="button" aria-label="Témoignage précédent" onClick="{{ prevT }}" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(253,247,238,0.3); background: transparent; color: #fdf7ee; font-size: 16px; cursor: pointer; transition: border-color 220ms;" style-hover="border-color: #f5ac3c;">←</button>
+      <div style="display: flex; gap: 10px;">
+        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+          <button type="button" aria-label="Voir le témoignage {{ d.label }}" onClick="{{ d.go }}" style="width: 8px; height: 8px; padding: 0; border-radius: 50%; border: none; background: {{ d.bg }}; cursor: pointer; transition: background 220ms;"></button>
+        </sc-for>
+      </div>
+      <button type="button" aria-label="Témoignage suivant" onClick="{{ nextT }}" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(253,247,238,0.3); background: transparent; color: #fdf7ee; font-size: 16px; cursor: pointer; transition: border-color 220ms;" style-hover="border-color: #f5ac3c;">→</button>
+    </div>
+  </div>
+</section>
+
+<section id="actualites" data-screen-label="07 Actualités" style="background: #f7ebdf; padding: clamp(90px, 12vw, 160px) clamp(20px, 5vw, 48px);">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div data-reveal style="margin-bottom: clamp(40px, 5vw, 64px);">
+      <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8a6a3a;">Actualités</p>
+      <h2 style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.01em; color: #214856;">Nos actualités Comet</h2>
+    </div>
+    <sc-for list="{{ actus }}" as="a" hint-placeholder-count="3">
+      <article data-reveal data-reveal-delay="{{ a.delay }}" style="display: grid; grid-template-columns: minmax(180px, 300px) 1fr; gap: clamp(20px, 4vw, 48px); align-items: center; padding: clamp(28px, 4vw, 44px) 0; border-top: 1px solid rgba(33,72,86,0.14);">
+        <div style="position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: #efe1d0;">
+          <div style="position: absolute; inset: 0; transition: transform 500ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="transform: scale(1.03);">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ a.slot }}" shape="rect" src="{{ a.src }}" fit="{{ a.fit }}" placeholder="{{ a.ph }}" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
+          </div>
+        </div>
+        <div>
+          <p style="margin: 0 0 10px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a98a1;">{{ a.date }}</p>
+          <h3 style="margin: 0 0 10px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(1.35rem, 2vw, 1.8rem); line-height: 1.2; color: #214856;">{{ a.title }}</h3>
+          <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 15px; line-height: 1.6; color: #4a5b67; max-width: 46em;">{{ a.excerpt }}</p>
+          <a href="{{ a.href }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: #214856; text-decoration: none; border-bottom: 1px solid #f5ac3c; padding-bottom: 3px; transition: gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="gap: 14px;">Lire l’article <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </sc-for>
+  </div>
+</section>
+
+<section id="contact" data-screen-label="08 Contact" style="background: #214856; padding: clamp(110px, 15vw, 190px) 24px; text-align: center;">
+  <div data-reveal style="max-width: 680px; margin: 0 auto;">
+    <p style="margin: 0 0 20px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(253,247,238,0.6);">Contact</p>
+    <h2 style="margin: 0 0 24px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.01em; color: #fdf7ee;">Restons en contact</h2>
+    <p style="margin: 0 auto 40px; max-width: 32em; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.65; color: rgba(253,247,238,0.78);">Nos équipes seraient ravies de vous accueillir dans l’un de nos Comet. Un interlocuteur dédié vous répond et construit votre événement avec vous.</p>
+    <a href="https://comet-next-web.vercel.app/contact" style="display: inline-flex; align-items: center; gap: 10px; background: #f5ac3c; color: #214856; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; padding: 17px 30px; border-radius: 999px; text-decoration: none; transition: background 220ms cubic-bezier(0.22,0.61,0.36,1), gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28; gap: 16px;">Mon devis en 2 minutes <span aria-hidden="true">→</span></a>
+    <p style="margin: 28px 0 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14px; color: rgba(253,247,238,0.6);">ou par téléphone au <a href="tel:+33184806060" style="color: #fdf7ee; text-decoration: none; border-bottom: 1px solid rgba(245,172,60,0.6);">01 84 80 60 60</a></p>
+  </div>
+</section>
+
+<footer data-screen-label="09 Footer" style="background: #f7ebdf; border-top: 1px solid rgba(33,72,86,0.14); padding: clamp(48px, 6vw, 72px) clamp(20px, 5vw, 48px) 40px;">
+  <div style="max-width: 1320px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: minmax(200px, 1.3fr) repeat(auto-fit, minmax(170px, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start;">
+      <div>
+        <img src="assets/logo-comet.svg" alt="Comet Meetings" style="height: 22px; display: block; margin-bottom: 16px;">
+        <p style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 500; font-size: 15px; line-height: 1.5; color: rgba(33,72,86,0.8); max-width: 18em;">Rassembler les humains dans un monde qui les éloigne.</p>
+      </div>
+      <sc-for list="{{ footerMain }}" as="col" hint-placeholder-count="3">
+        <div>
+          <p style="margin: 0 0 14px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(33,72,86,0.85);">{{ col.title }}</p>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
+              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(33,72,86,0.7); text-decoration: none; transition: color 140ms;" style-hover="color: #214856;">{{ lk.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top: clamp(40px, 5vw, 56px); padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid rgba(33,72,86,0.1); display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: clamp(24px, 3vw, 48px);">
+      <sc-for list="{{ footerSeo }}" as="col" hint-placeholder-count="4">
+        <div>
+          <p style="margin: 0 0 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(33,72,86,0.7);">{{ col.title }}</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
+              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(33,72,86,0.7); text-decoration: none; transition: color 140ms;" style-hover="color: #214856;">{{ lk.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="margin-top: clamp(40px, 5vw, 56px); padding-top: 24px; border-top: 1px solid rgba(33,72,86,0.1); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55);">© 2026 Comet Meetings</p>
+      <div style="display: flex; gap: 20px;">
+        <a href="#" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">Mentions légales</a>
+        <a href="#" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">Politique de confidentialité</a>
+        <a href="mailto:contact-fr@comet.team" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">contact-fr@comet.team</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;kenBurns&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;autoRotate&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;reveals&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Motion&quot; }
+}">
+class Component extends DCLogic {
+  state = { scrolled: false, tIndex: 0, tOpacity: 1 };
+
+  reduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  CDN = 'https://cdn.sanity.io/images/g8jgfkf5/production/';
+
+  testimonials = [
+    { company: 'Dior · Comet Arboretum', quote: 'PI Planning multi-jours avec plus de 500 personnes des équipes internationales. Un lieu inspirant, propice au travail collaboratif intensif sur plusieurs journées.', name: 'Julie Benamran', role: 'Head of eCommerce projects and digital transformation', video: 'https://www.youtube.com/watch?v=Vki_FeDvJRw' },
+    { company: 'BNP Paribas · Comet Bourse', quote: 'Plus de 10 événements clients et partenaires, des rendez-vous privés entre entreprises cotées et fonds d’investissement jusqu’aux plénières thématiques dans l’auditorium.', name: 'Camille Lemercier-Lebleu', role: 'Head of client and corporate access', video: 'https://www.youtube.com/watch?v=DUuRlM5gFTo' },
+    { company: 'EDF · Comet Cœur Défense', quote: 'EDF Renouvelables a réuni 40 collaborateurs pour un séminaire mêlant présentations, échanges et moments de convivialité.', name: 'Sophie Viallet', role: 'Cheffe de projet ingénierie de formation', video: 'https://www.youtube.com/watch?v=09bnkzNAcBI' },
+  ];
+
+  logos = [
+    { name: 'SNCF', file: 'ab0210fd7d245a40687f3cc516882521d00283f6-1280x671.png', h: '30px' },
+    { name: 'Vinci', file: '751bd316822248582a5f607e38437266864f3943-1280x356.png', h: '22px' },
+    { name: 'Axa', file: 'be6cf9d23fb6cb7da112df30ae4397be17fefb38-3840x3840.png', h: '34px' },
+    { name: 'Deloitte', file: '9293c58337454019b01b7adaba763f6cef5a5acd-960x184.png', h: '18px' },
+    { name: 'Qonto', file: '43ff6a0e51500b8002ac7c0a1ec0c7cf2fb1db4a-1024x293.png', h: '24px' },
+    { name: 'Client Comet', file: '4815645411457fcd0dcf8a9497a924e5a28d874b-1280x889.png', h: '32px' },
+    { name: 'Client Comet', file: '286c667cf6448f6365583b923480809a519261e2-3840x1385.png', h: '26px' },
+    { name: 'Client Comet', file: '453995bc11a28fcce6928f0fbdef276676e6dc66-1000x253.png', h: '22px' },
+  ];
+
+  componentDidMount() {
+    this._cleanup = [];
+    const motionOK = !this.reduced && (this.props.reveals ?? true);
+
+    const onScroll = () => {
+      const s = window.scrollY > 32;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+      this._parallaxTick();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    this._cleanup.push(() => window.removeEventListener('scroll', onScroll));
+    onScroll();
+
+    if (motionOK) {
+      const ease = 'cubic-bezier(0.16, 1, 0.3, 1)';
+      const els = Array.from(document.querySelectorAll('[data-reveal]'));
+      els.forEach((el) => { el.style.opacity = '0'; el.style.transform = 'translateY(24px)'; });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const el = en.target;
+          io.unobserve(el);
+          const d = parseInt(el.getAttribute('data-reveal-delay') || '0', 10) || 0;
+          setTimeout(() => {
+            el.style.transition = 'opacity 600ms ' + ease + ', transform 600ms ' + ease;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          }, d);
+        });
+      }, { threshold: 0.2 });
+      els.forEach((el) => io.observe(el));
+      this._cleanup.push(() => io.disconnect());
+
+      const words = Array.from(document.querySelectorAll('[data-mword]'));
+      words.forEach((w) => { w.style.opacity = '0'; w.style.transform = 'translateY(12px)'; });
+      const man = document.querySelector('[data-manifesto]');
+      if (man) {
+        const io2 = new IntersectionObserver((entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          io2.disconnect();
+          words.forEach((w, i) => {
+            setTimeout(() => {
+              w.style.transition = 'opacity 600ms ' + ease + ', transform 600ms ' + ease;
+              w.style.opacity = '1';
+              w.style.transform = 'translateY(0)';
+            }, i * 40);
+          });
+        }, { threshold: 0.4 });
+        io2.observe(man);
+        this._cleanup.push(() => io2.disconnect());
+      }
+    }
+
+    const counter = document.querySelector('[data-counter]');
+    if (counter && motionOK) {
+      const io3 = new IntersectionObserver((entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io3.disconnect();
+        const start = performance.now();
+        const dur = 1200;
+        const target = 1000000;
+        const step = (now) => {
+          const t = Math.min(1, (now - start) / dur);
+          const v = Math.round(target * (1 - Math.pow(1 - t, 3)));
+          counter.textContent = v.toLocaleString('fr-FR');
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }, { threshold: 0.6 });
+      io3.observe(counter);
+      this._cleanup.push(() => io3.disconnect());
+    }
+
+    this._parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
+    this._parallaxOn = motionOK;
+    this._parallaxTick();
+
+    const rail = document.querySelector('[data-rail]');
+    const bar = document.querySelector('[data-rail-bar]');
+    if (rail && bar) {
+      const update = () => {
+        const m = rail.scrollWidth - rail.clientWidth;
+        const first = rail.firstElementChild;
+        const frac = m > 0 ? rail.scrollLeft / m : 0;
+        const base = first ? Math.min(1, first.offsetWidth / Math.max(1, rail.scrollWidth)) : 0.2;
+        bar.style.width = (base * 100 + frac * (100 - base * 100)) + '%';
+      };
+      rail.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      this._cleanup.push(() => { rail.removeEventListener('scroll', update); window.removeEventListener('resize', update); });
+      update();
+
+      let down = false, sx = 0, sl = 0, moved = false;
+      const onDown = (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = rail.scrollLeft; rail.style.cursor = 'grabbing'; };
+      const onMove = (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; rail.scrollLeft = sl - dx; };
+      const onUp = () => { down = false; rail.style.cursor = 'grab'; };
+      const onClick = (e) => { if (moved) { e.preventDefault(); moved = false; } };
+      rail.addEventListener('pointerdown', onDown);
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+      rail.addEventListener('click', onClick, true);
+      rail.addEventListener('keydown', (e) => {
+        const w = (rail.firstElementChild ? rail.firstElementChild.offsetWidth : 400) + 20;
+        if (e.key === 'ArrowRight') { e.preventDefault(); rail.scrollBy({ left: w, behavior: this.reduced ? 'auto' : 'smooth' }); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); rail.scrollBy({ left: -w, behavior: this.reduced ? 'auto' : 'smooth' }); }
+      });
+      this._cleanup.push(() => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); });
+    }
+
+    this._startRotation();
+  }
+
+  _parallaxTick() {
+    if (!this._parallaxOn || !this._parallaxEls || this._parallaxRaf) return;
+    this._parallaxRaf = requestAnimationFrame(() => {
+      this._parallaxRaf = null;
+      const vh = window.innerHeight;
+      this._parallaxEls.forEach((w) => {
+        const host = w.parentElement;
+        if (!host) return;
+        const r = host.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        const p = (r.top + r.height / 2 - vh / 2) / vh;
+        const t = Math.max(-6, Math.min(6, -p * 8));
+        w.style.transform = 'translateY(' + t + '%)';
+      });
+    });
+  }
+
+  _startRotation() {
+    this._stopRotation();
+    if (this.reduced || !(this.props.autoRotate ?? true)) return;
+    this._timer = setInterval(() => this._goTo(this.state.tIndex + 1), 8000);
+    this._cleanup.push(() => this._stopRotation());
+  }
+
+  _stopRotation() { if (this._timer) { clearInterval(this._timer); this._timer = null; } }
+
+  _goTo(i) {
+    const n = this.testimonials.length;
+    const next = ((i % n) + n) % n;
+    if (this.reduced) { this.setState({ tIndex: next }); return; }
+    this.setState({ tOpacity: 0 });
+    setTimeout(() => this.setState({ tIndex: next, tOpacity: 1 }), 320);
+  }
+
+  _manualGo(i) { this._goTo(i); this._startRotation(); }
+
+  componentWillUnmount() { (this._cleanup || []).forEach((fn) => fn()); }
+
+  renderVals() {
+    const scrolled = this.state.scrolled;
+    const t = this.testimonials[this.state.tIndex];
+    const kb = (this.props.kenBurns ?? true) && !this.reduced;
+    const C = this.CDN;
+    return {
+      headerBg: scrolled ? 'rgba(247,235,223,0.78)' : 'rgba(247,235,223,0)',
+      headerBlur: scrolled ? 'blur(14px)' : 'none',
+      headerShadow: scrolled ? 'inset 0 -1px 0 rgba(33,72,86,0.1)' : 'none',
+      headerColor: scrolled ? '#214856' : '#fdf7ee',
+      headerLogo: scrolled ? 'logo-comet.svg' : 'logo-comet-alt.svg',
+      kenBurnsAnim: kb ? 'ken-burns 12s cubic-bezier(0.22, 0.61, 0.36, 1) forwards' : 'none',
+      navLinks: [
+        { label: 'Nos lieux', href: '#lieux' },
+        { label: 'Les expériences', href: '#experiences' },
+        { label: 'Le manifeste', href: '#manifeste' },
+        { label: 'Actualités', href: '#actualites' },
+        { label: 'Contact', href: '#contact' },
+      ],
+      logosLoop: this.logos.concat(this.logos).map((l) => ({ name: l.name, h: l.h, src: C + l.file + '?w=260&fit=max&auto=format' })),
+      experiences: [
+        { n: '01', title: 'Réunions', desc: 'Journées d’étude, séminaires et formations, comités de direction, team building, ateliers, kick-off.', cta: 'Réserver une journée d’étude', href: 'https://comet-next-web.vercel.app/solution/meetings', justify: 'flex-start', slot: 'exp-reunions', src: C + '88b4c4881fb8c51e111d7c6e81e96c953e40e28c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · salle de réunion' },
+        { n: '02', title: 'Événements', desc: 'Conventions, conférences et assemblées générales, salons, lancements de produit, remises de prix.', cta: 'Organiser un événement', href: 'https://comet-next-web.vercel.app/solution/events', justify: 'flex-end', slot: 'exp-evenements', src: C + '36bdd602d92e0582519d5bf58c3bc2c3a141229c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · auditorium' },
+        { n: '03', title: 'Soirées', desc: 'Afterworks, cocktails et dîners assis, summer parties, soirées de fin d’année, networking.', cta: 'Privatiser un espace', href: 'https://comet-next-web.vercel.app/solution/soirees', justify: 'flex-start', slot: 'exp-soirees', src: C + '16c18e4f227d0fed0113df06638b9bc11db60b5c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · soirée rooftop' },
+      ],
+      lieux: [
+        { name: 'Comet Étoile', city: 'Paris 16e', slot: 'lieu-etoile', href: 'https://comet-next-web.vercel.app/lieux/comet-etoile', src: C + '05e798b810d4c7f961f2209f78186766d9e8360c-8400x5600.jpg?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Étoile' },
+        { name: 'Comet Cœur Défense', city: 'La Défense', slot: 'lieu-defense', href: 'https://comet-next-web.vercel.app/lieux/comet-la-defense', src: C + 'cd9251151a409391bd566fe643edb127b3846711-5477x3651.jpg?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Cœur Défense' },
+        { name: 'Comet Levallois', city: 'Levallois', slot: 'lieu-levallois', href: 'https://comet-next-web.vercel.app/lieux/comet-levallois', src: C + '0bf775d7970172cd13ec1f9248cd9d6aa5419077-2132x1372.png?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Levallois' },
+        { name: 'Comet Louise', city: 'Bruxelles', slot: 'lieu-louise', href: 'https://comet-next-web.vercel.app/lieux/comet-louise', src: C + '164c70ca3d5b35762b96e8097799c815156bc068-6106x4071.jpg?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Louise' },
+        { name: 'Comet Retiro', city: 'Madrid', slot: 'lieu-retiro', href: 'https://comet-next-web.vercel.app/lieux/comet-retiro', src: C + '55139adca1b26bd5b1607066b7aac1cbf1a9802f-3640x1960.png?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Retiro' },
+        { name: 'Comet Arboretum', city: 'Nanterre', slot: 'lieu-arboretum', href: 'https://comet-next-web.vercel.app/lieux/comet-arboretum', src: '', ph: 'Déposez la photo du Comet Arboretum' },
+      ],
+      actus: [
+        { date: 'Actualité', title: 'La Table du Chef Meliava', excerpt: 'Comet ouvre son restaurant, La Table du chef Meliava, au cœur de ses espaces parisiens.', href: 'https://www.comet-meetings.com/communique-de-presse/comet-ouvre-son-restaurant-la-table-du-chef-meliava', slot: 'actu-meliava', fit: 'cover', src: C + '46cb11fc8dfcbe5db2c989a70577534a1e54e866-2132x1364.png?rect=99,97,1953,1099&w=800&auto=format', ph: 'Photo 3/2 · table dressée', delay: 0 },
+        { date: 'Actualité', title: 'Opening Comet Levallois', excerpt: 'Comet inaugure Le Grand Comet, à Levallois.', href: 'https://www.comet-meetings.com/communique-de-presse/comet-inaugure-le-grand-comet-a-levallois', slot: 'actu-levallois', fit: 'cover', src: C + '0bf775d7970172cd13ec1f9248cd9d6aa5419077-2132x1372.png?rect=0,87,2132,1199&w=800&auto=format', ph: 'Photo 3/2 · jardin Levallois', delay: 100 },
+        { date: 'Actualité', title: 'Label B Corp', excerpt: 'Comet obtient le label B Corp et accélère son engagement écologique et social.', href: 'https://www.comet-meetings.com/communique-de-presse/comet-obtient-le-label-b-corp-et-accelere-son-engagement-ecologique-et-social', slot: 'actu-bcorp', fit: 'contain', src: C + 'ae3a9858c0aac921f6ae4b207c6e31ed64061bcc-272x185.png?w=400&fit=max&auto=format', ph: 'Visuel B Corp', delay: 200 },
+      ],
+      footerMain: [
+        { title: 'Comète', links: [
+          { label: 'Notre histoire', href: 'https://comet-next-web.vercel.app/qui-sommes-nous' },
+          { label: 'Comet Recrute', href: 'https://www.welcometothejungle.com/fr/companies/comet-meetings' },
+          { label: 'Photos de la comète', href: 'https://comet-next-web.vercel.app/photos' },
+          { label: 'Salle de presse', href: 'https://comet-next-web.vercel.app/newsroom' },
+          { label: 'Nous contacter', href: 'https://comet-next-web.vercel.app/contact' },
+        ] },
+        { title: 'Vos événements', links: [
+          { label: 'Petits événements', href: 'https://comet-next-web.vercel.app/solution/meetings' },
+          { label: 'Grands événements', href: 'https://comet-next-web.vercel.app/solution/events' },
+          { label: 'Soirées', href: 'https://comet-next-web.vercel.app/solution/soirees' },
+        ] },
+        { title: 'Solutions', links: [
+          { label: 'Comet Meetings', href: 'https://comet-next-web.vercel.app/solution/meetings' },
+          { label: 'Événements Comet', href: 'https://comet-next-web.vercel.app/solution/events' },
+          { label: 'Afterworks Comet', href: 'https://comet-next-web.vercel.app/solution/soirees' },
+          { label: 'Comet Espaces de travail', href: 'https://comet-next-web.vercel.app/solution/workplaces' },
+          { label: 'Comet Hôtellerie', href: 'https://comet-next-web.vercel.app/comethospitality' },
+        ] },
+      ],
+      footerSeo: [
+        { title: 'Comet Meetings', links: [
+          { label: 'Séminaire entreprise Paris', href: 'https://comet-next-web.vercel.app/seminaireentrepriseparis' },
+          { label: 'Salle de conférence Paris', href: 'https://comet-next-web.vercel.app/salledeconferenceparis' },
+          { label: 'Salle de formation Paris', href: 'https://comet-next-web.vercel.app/salledeformationparis' },
+          { label: 'Salle de réunion Paris', href: 'https://comet-next-web.vercel.app/salle-reunion-paris' },
+          { label: 'Team building Paris', href: 'https://comet-next-web.vercel.app/teambuildingparis' },
+        ] },
+        { title: 'Comet Events', links: [
+          { label: 'Lieu événementiel à Paris', href: 'https://comet-next-web.vercel.app/lieuevenementielparis' },
+          { label: 'Location salle événement', href: 'https://comet-next-web.vercel.app/locationsalleevenement' },
+          { label: 'Lancement de produit', href: 'https://comet-next-web.vercel.app/lancementdeproduit' },
+          { label: 'Salon professionnel', href: 'https://comet-next-web.vercel.app/salonprofessionnel' },
+          { label: 'Conférence', href: 'https://comet-next-web.vercel.app/conference' },
+        ] },
+        { title: 'Comet Afterworks', links: [
+          { label: 'Soirée d’entreprise à Paris', href: 'https://comet-next-web.vercel.app/soireeentrepriseparis' },
+          { label: 'Rooftop privatisable', href: 'https://comet-next-web.vercel.app/rooftopprivatisable' },
+          { label: 'Cocktail entreprise', href: 'https://comet-next-web.vercel.app/cocktailentreprise' },
+          { label: 'Afterwork Paris', href: 'https://comet-next-web.vercel.app/afterworkparis' },
+          { label: 'Summer Party', href: 'https://comet-next-web.vercel.app/summerparty' },
+        ] },
+        { title: 'Lieux Comet', links: [
+          { label: 'Lieu Paris', href: 'https://comet-next-web.vercel.app/lieuparis' },
+          { label: 'Lieu Levallois', href: 'https://comet-next-web.vercel.app/lieulevallois' },
+          { label: 'Lieu Neuilly', href: 'https://comet-next-web.vercel.app/lieuneuilly' },
+          { label: 'Lieu Puteaux', href: 'https://comet-next-web.vercel.app/lieuputeaux' },
+          { label: 'Lieu Nanterre', href: 'https://comet-next-web.vercel.app/lieunanterre' },
+        ] },
+      ],
+      tCompany: t.company,
+      tQuote: t.quote,
+      tName: t.name,
+      tRole: t.role,
+      tHasVideo: !!t.video,
+      tVideoHref: t.video || '#',
+      tOpacity: this.state.tOpacity,
+      dots: this.testimonials.map((x, i) => ({
+        label: String(i + 1),
+        bg: i === this.state.tIndex ? '#f5ac3c' : 'rgba(253,247,238,0.35)',
+        go: () => this._manualGo(i),
+      })),
+      prevT: () => this._manualGo(this.state.tIndex - 1),
+      nextT: () => this._manualGo(this.state.tIndex + 1),
+    };
+  }
+}
+</script>
+</body>
+</html>
