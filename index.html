@@ -59,6 +59,20 @@
     .rv-img { transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform; }
     .rv-card:hover .rv-img { transform: scale(1.05); }
     .rv-card:focus-visible { outline: 2px solid #d8902a; outline-offset: 2px; }
+    /* Photo wall (reunion-style mosaic) */
+    .pw-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .pw-item { margin: 0; overflow: hidden; border-radius: 20px; background: #efe1d0; box-shadow: 0 1px 3px rgba(20,45,54,0.06), inset 0 0 0 1px rgba(33,72,86,0.06); transition: box-shadow 300ms ease; }
+    .pw-item:hover { box-shadow: 0 12px 26px rgba(20,45,54,0.14), inset 0 0 0 1px rgba(33,72,86,0.06); }
+    .pw-item img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 850ms cubic-bezier(0.22,0.61,0.36,1); }
+    .pw-item:hover img { transform: scale(1.045); }
+    @media (min-width: 981px) {
+      .pw-grid { grid-auto-flow: column; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(8, 200px); }
+      .pw-item img { aspect-ratio: auto; height: 100%; }
+      .pw-item[data-shape="portrait"] { grid-row: span 2; }
+    }
+    /* Client cases dark cards */
+    .cc-img { transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1), opacity 700ms ease; will-change: transform; }
+    .cc-card:hover .cc-img { transform: scale(1.05); opacity: 0.5; }
     @media (max-width: 820px) {
       .xp-grid { grid-template-columns: 1fr !important; }
       .xp-row { flex-direction: column !important; height: auto !important; }
@@ -168,27 +182,42 @@
   </div>
 </section>
 
-<section id="temoignages" data-sanity-block="sharedClientReviews" data-screen-label="06 Témoignages" style="background: #214856; padding: clamp(100px, 14vw, 180px) 24px;">
-  <div data-reveal style="max-width: 920px; margin: 0 auto; text-align: center;">
-    <h2 data-sanity-field="title" style="margin: 0 0 clamp(40px, 5vw, 64px); text-align: center; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Ils nous ont fait confiance.</h2>
-    <div style="min-height: 300px; display: flex; flex-direction: column; justify-content: center; opacity: {{ tOpacity }}; transition: opacity 300ms cubic-bezier(0.22,0.61,0.36,1);">
-      <p style="margin: 0 0 24px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #f5ac3c;">{{ tCompany }}</p>
-      <blockquote style="margin: 0 0 36px; font-family: 'Vollkorn', serif; font-style: italic; font-weight: 500; font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1.4; color: #fdf7ee;">«&nbsp;{{ tQuote }}&nbsp;»</blockquote>
-      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #fdf7ee;">{{ tName }}</p>
-      <p style="margin: 6px 0 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(253,247,238,0.6);">{{ tRole }}</p>
-      <sc-if value="{{ tHasVideo }}" hint-placeholder-val="{{ false }}">
-        <p style="margin: 24px 0 0;"><a href="{{ tVideoHref }}" target="_blank" rel="noopener" style="display: inline-block; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 13px; color: rgba(253,247,238,0.8); text-decoration: none; border: 1px solid rgba(253,247,238,0.3); border-radius: 999px; padding: 10px 20px; transition: border-color 220ms, color 220ms;" style-hover="border-color: #f5ac3c; color: #fdf7ee;">Voir le témoignage</a></p>
-      </sc-if>
+<section data-screen-label="06 Galerie" style="background: #efe1d0; padding: clamp(56px, 8vw, 104px) 0;">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
+    <div class="pw-grid">
+      <sc-for list="{{ gallery }}" as="ph" hint-placeholder-count="24">
+        <figure class="pw-item" data-shape="{{ ph.shape }}"><img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy"></figure>
+      </sc-for>
     </div>
-    <div style="margin-top: clamp(36px, 5vw, 56px); display: flex; align-items: center; justify-content: center; gap: 28px;">
-      <button type="button" aria-label="Témoignage précédent" onClick="{{ prevT }}" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(253,247,238,0.3); background: transparent; color: #fdf7ee; font-size: 16px; cursor: pointer; transition: border-color 220ms;" style-hover="border-color: #f5ac3c;">←</button>
-      <div style="display: flex; gap: 10px;">
-        <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
-          <button type="button" aria-label="Voir le témoignage {{ d.label }}" onClick="{{ d.go }}" style="width: 8px; height: 8px; padding: 0; border-radius: 50%; border: none; background: {{ d.bg }}; cursor: pointer; transition: background 220ms;"></button>
-        </sc-for>
+  </div>
+</section>
+
+<section id="temoignages" data-sanity-block="sharedClientReviews" data-sanity-variant="clientCases" data-screen-label="07 Ils ont choisi Comet" style="background: #f7ebdf; padding: clamp(80px, 11vw, 150px) 0;">
+  <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
+    <div data-reveal style="margin-bottom: clamp(28px, 4vw, 44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
+      <div style="max-width: 40em;">
+        <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Ils ont choisi Comet</p>
+        <h2 data-sanity-field="title" style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Leur événement, <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #d8902a;">raconté</span></h2>
       </div>
-      <button type="button" aria-label="Témoignage suivant" onClick="{{ nextT }}" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(253,247,238,0.3); background: transparent; color: #fdf7ee; font-size: 16px; cursor: pointer; transition: border-color 220ms;" style-hover="border-color: #f5ac3c;">→</button>
+      <div style="display: flex; flex: none; gap: 10px;">
+        <button data-rail-prev type="button" aria-label="Précédent" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(33,72,86,0.15); background: #ffffff; color: #214856; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1), border-color 200ms, color 200ms, opacity 200ms;" style-hover="background: #214856; border-color: #214856; color: #fdf7ee;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button data-rail-next type="button" aria-label="Suivant" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(33,72,86,0.15); background: #ffffff; color: #214856; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1), border-color 200ms, color 200ms, opacity 200ms;" style-hover="background: #214856; border-color: #214856; color: #fdf7ee;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
     </div>
+  </div>
+  <div data-rail tabindex="0" role="region" aria-label="Références clients, liste à faire défiler horizontalement" style="display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px clamp(20px, 5vw, 48px) 12px; cursor: grab; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+    <sc-for list="{{ clientCases }}" as="cc" hint-placeholder-count="6">
+      <div class="cc-card" data-screen-label="Référence {{ cc.brand }}" style="flex: none; scroll-snap-align: start; position: relative; aspect-ratio: 3 / 4; width: 280px; max-width: 75vw; overflow: hidden; border-radius: 24px; background: #0f2730; box-shadow: 0 6px 16px rgba(20,45,54,0.12);">
+        <img class="cc-img" src="{{ cc.src }}" alt="{{ cc.brand }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.66;">
+        <span aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.8) 100%);"></span>
+        <span style="position: absolute; top: 18px; left: 18px; z-index: 2; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 11px; color: #ffffff; text-transform: uppercase; letter-spacing: 0.12em;">{{ cc.topLabel }}</span>
+        <span style="position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; color: #ffffff;">
+          <span style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 19px; letter-spacing: 0.01em;">{{ cc.brand }}</span>
+          <span style="margin-top: 6px; display: flex; align-items: center; gap: 7px; font-family: 'Poppins', sans-serif; font-size: 13px; color: rgba(255,255,255,0.8);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f5ac3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;" aria-hidden="true"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{{ cc.eventType }}</span>
+          <span style="margin-top: 4px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 12.5px; color: rgba(255,255,255,0.7);">{{ cc.pax }}</span>
+        </span>
+      </div>
+    </sc-for>
   </div>
 </section>
 
@@ -381,9 +410,11 @@ class Component extends DCLogic {
     this._parallaxOn = motionOK;
     this._parallaxTick();
 
-    const rail = document.querySelector('[data-rail]');
-    const bar = document.querySelector('[data-rail-bar]');
-    if (rail) {
+    document.querySelectorAll('[data-rail]').forEach((rail) => {
+      const scope = rail.closest('section') || document;
+      const bar = scope.querySelector('[data-rail-bar]');
+      const prevBtn = scope.querySelector('[data-rail-prev]');
+      const nextBtn = scope.querySelector('[data-rail-next]');
       const update = () => {
         if (!bar) return;
         const m = rail.scrollWidth - rail.clientWidth;
@@ -414,8 +445,6 @@ class Component extends DCLogic {
       this._cleanup.push(() => { window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); });
 
       const railStep = () => (rail.firstElementChild ? rail.firstElementChild.offsetWidth : 340) + 20;
-      const prevBtn = document.querySelector('[data-rail-prev]');
-      const nextBtn = document.querySelector('[data-rail-next]');
       if (prevBtn) {
         const goPrev = () => rail.scrollBy({ left: -railStep(), behavior: this.reduced ? 'auto' : 'smooth' });
         prevBtn.addEventListener('click', goPrev);
@@ -439,7 +468,7 @@ class Component extends DCLogic {
         this._cleanup.push(() => { rail.removeEventListener('scroll', edgeState); window.removeEventListener('resize', edgeState); });
         edgeState();
       }
-    }
+    });
 
     this._startRotation();
   }
@@ -514,6 +543,44 @@ class Component extends DCLogic {
         { name: 'Comet Louise', city: 'Bruxelles', slot: 'lieu-louise', href: 'https://comet-next-web.vercel.app/lieux/comet-louise', src: C + '164c70ca3d5b35762b96e8097799c815156bc068-6106x4071.jpg?w=1200&h=800&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Louise' },
         { name: 'Comet Retiro', city: 'Madrid', slot: 'lieu-retiro', href: 'https://comet-next-web.vercel.app/lieux/comet-retiro', src: C + '55139adca1b26bd5b1607066b7aac1cbf1a9802f-3640x1960.png?w=1200&h=800&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Retiro' },
         { name: 'Comet Arboretum', city: 'Nanterre', slot: 'lieu-arboretum', href: 'https://comet-next-web.vercel.app/lieux/comet-arboretum', src: '', ph: 'Déposez la photo du Comet Arboretum' },
+      ],
+      clientCases: [
+        { src: 'venues-media/client-1.jpg', brand: 'Forvis Mazars', topLabel: 'Comet Bourse', eventType: "Journée d'étude", pax: '160 participants' },
+        { src: 'venues-media/client-2.jpg', brand: 'Enedis', topLabel: 'Comet Cœur Défense', eventType: 'Séminaire', pax: '34 participants' },
+        { src: 'venues-media/client-3.jpg', brand: 'GUBERNA', topLabel: 'Comet Louise', eventType: 'Formation', pax: '20 participants' },
+        { src: 'venues-media/client-4.jpg', brand: 'SNCF', topLabel: 'Comet Levallois', eventType: 'Convention', pax: '250 participants' },
+        { src: 'venues-media/client-5.jpg', brand: 'Breakfast Learning', topLabel: 'Comet Étoile', eventType: 'Conférence', pax: '60 participants' },
+        { src: 'venues-media/client-6.jpg', brand: 'Big Up', topLabel: 'Comet Bourse', eventType: 'Salon', pax: '380 participants' },
+        { src: 'venues-media/client-7.jpg', brand: 'LVMH', topLabel: 'Comet Levallois', eventType: 'Lancement de produit', pax: '230 participants' },
+        { src: 'venues-media/client-8.jpg', brand: 'Sage', topLabel: 'Comet Arboretum', eventType: 'Table ronde / Plénière', pax: '150 participants' },
+        { src: 'venues-media/client-9.jpg', brand: 'Elevate', topLabel: 'Comet Bourse', eventType: 'Événement client', pax: '180 participants' },
+        { src: 'venues-media/client-10.jpg', brand: 'Equadis', topLabel: 'Comet Bourse', eventType: 'Événement décideurs', pax: '155 participants' },
+      ],
+      gallery: [
+        { src: 'venues-media/wall-01.jpg', alt: 'Comet Étoile', shape: 'portrait' },
+        { src: 'venues-media/wall-02.jpg', alt: 'Comet Arboretum', shape: 'landscape' },
+        { src: 'venues-media/wall-03.jpg', alt: 'Comet Levallois', shape: 'landscape' },
+        { src: 'venues-media/wall-04.jpg', alt: 'Comet Étoile', shape: 'portrait' },
+        { src: 'venues-media/wall-05.jpg', alt: 'Comet Retiro', shape: 'landscape' },
+        { src: 'venues-media/wall-06.jpg', alt: 'Comet Place des Victoires', shape: 'landscape' },
+        { src: 'venues-media/wall-07.jpg', alt: 'Comet Bourse', shape: 'landscape' },
+        { src: 'venues-media/wall-08.jpg', alt: 'Comet Cœur Défense', shape: 'portrait' },
+        { src: 'venues-media/wall-09.jpg', alt: 'Comet Bercy', shape: 'landscape' },
+        { src: 'venues-media/wall-10.jpg', alt: 'Comet Levallois', shape: 'landscape' },
+        { src: 'venues-media/wall-11.jpg', alt: 'Comet Étoile', shape: 'portrait' },
+        { src: 'venues-media/wall-12.jpg', alt: 'Comet Arboretum', shape: 'landscape' },
+        { src: 'venues-media/wall-13.jpg', alt: 'Comet Ternes', shape: 'landscape' },
+        { src: 'venues-media/wall-14.jpg', alt: 'Comet Place des Victoires', shape: 'landscape' },
+        { src: 'venues-media/wall-15.jpg', alt: 'Comet Étoile', shape: 'portrait' },
+        { src: 'venues-media/wall-16.jpg', alt: 'Comet Levallois', shape: 'landscape' },
+        { src: 'venues-media/wall-17.jpg', alt: 'Comet Retiro', shape: 'landscape' },
+        { src: 'venues-media/wall-18.jpg', alt: 'Comet Arboretum', shape: 'portrait' },
+        { src: 'venues-media/wall-19.jpg', alt: 'Comet Étoile', shape: 'portrait' },
+        { src: 'venues-media/wall-20.jpg', alt: 'Comet Arboretum', shape: 'landscape' },
+        { src: 'venues-media/wall-21.jpg', alt: 'Comet Cœur Défense', shape: 'landscape' },
+        { src: 'venues-media/wall-22.jpg', alt: 'Comet Ternes', shape: 'portrait' },
+        { src: 'venues-media/wall-23.jpg', alt: 'Comet Arboretum', shape: 'landscape' },
+        { src: 'venues-media/wall-24.jpg', alt: 'Comet Étoile', shape: 'landscape' },
       ],
       actus: [
         { date: 'Actualité', title: 'La Table du Chef Meliava', excerpt: 'Comet ouvre son restaurant, La Table du chef Meliava, au cœur de ses espaces parisiens.', href: 'https://www.comet-meetings.com/communique-de-presse/comet-ouvre-son-restaurant-la-table-du-chef-meliava', slot: 'actu-meliava', fit: 'cover', src: C + '46cb11fc8dfcbe5db2c989a70577534a1e54e866-2132x1364.png?rect=99,97,1953,1099&w=800&auto=format', ph: 'Photo 3/2 · table dressée', delay: 0 },
