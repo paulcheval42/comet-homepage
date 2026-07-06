@@ -28,6 +28,8 @@
       [data-anim] { animation: none !important; }
       [data-curtain] { display: none !important; }
     }
+    /* Hero title: force max 2 lines above mobile so it never crowds the visual */
+    @media (min-width: 680px) { #hero h1 > span > span { white-space: nowrap; } }
   </style>
 </helmet>
 
@@ -50,7 +52,7 @@
   <div aria-hidden="true" style="position: absolute; inset: 0; background: rgba(242,209,188,0.42); pointer-events: none;"></div>
   <div data-curtain aria-hidden="true" style="position: absolute; inset: 0; background: #f7ebdf; z-index: 2; pointer-events: none; animation: curtain-lift 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;"></div>
   <div style="position: relative; z-index: 3; height: 100%; max-width: 1100px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px) clamp(56px, 10vh, 110px); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center;">
-    <h1 data-sanity-field="title" style="margin: 0 0 30px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(2rem, 4.2vw, 3.6rem); line-height: 1.18; letter-spacing: -0.01em; color: #ffffff;">
+    <h1 data-sanity-field="title" style="margin: 0 0 30px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: clamp(1.9rem, 3.9vw, 3.35rem); line-height: 1.18; letter-spacing: -0.01em; color: #ffffff;">
       <span style="display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em;"><span data-anim style="display: block; animation: line-up 800ms cubic-bezier(0.16, 1, 0.3, 1) 380ms both;">Trouvez le lieu <em style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; letter-spacing: 0;">parfait</em></span></span>
       <span style="display: block; overflow: hidden; padding-bottom: 0.14em;"><span data-anim style="display: block; animation: line-up 800ms cubic-bezier(0.16, 1, 0.3, 1) 460ms both;">pour vos événements professionnels.</span></span>
     </h1>
@@ -67,14 +69,13 @@
   <div aria-hidden="true" style="position: absolute; right: -200px; top: 50%; transform: translateY(-50%) rotate(180deg); width: 640px; height: 396px; background: #efe1d0; -webkit-mask-image: url('assets/shape-2.svg'); mask-image: url('assets/shape-2.svg'); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: contain; mask-size: contain; pointer-events: none;"></div>
   <div style="position: relative; max-width: 1080px; margin: 0 auto;">
     <p data-reveal style="margin: 0 0 clamp(30px, 4.5vw, 52px); display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #4a5b67;"><span aria-hidden="true" style="width: 24px; height: 2px; background: #f5ac3c;"></span>Le manifeste</p>
-    <div style="display: grid; grid-template-columns: auto 1fr; gap: clamp(14px, 3vw, 38px); align-items: start; max-width: 900px;">
-      <span aria-hidden="true" data-reveal style="font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(4.25rem, 11vw, 8.5rem); line-height: 0.72; color: #f5ac3c;">«</span>
-      <div>
+    <div style="max-width: 880px;">
+      <blockquote style="margin: 0; border-left: 2px solid #f5ac3c; padding-left: clamp(24px, 3.5vw, 44px);">
         <p data-manifesto data-sanity-field="content" style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.9rem, 3.7vw, 3.05rem); line-height: 1.26; letter-spacing: -0.01em; color: #214856;">
-          <span data-mword style="display: inline-block;">Rassembler</span> <span data-mword style="display: inline-block;">les humains</span> <span data-mword style="display: inline-block;">dans un monde</span> <span data-mword style="display: inline-block;">qui les éloigne.&nbsp;»</span>
+          <span data-mword style="display: inline-block;">«&nbsp;Rassembler</span> <span data-mword style="display: inline-block;">les humains</span> <span data-mword style="display: inline-block;">dans un monde</span> <span data-mword style="display: inline-block;">qui les éloigne.&nbsp;»</span>
         </p>
-        <p data-reveal data-reveal-delay="120" data-sanity-field="subtitle" style="margin: clamp(28px, 4vw, 42px) 0 0; max-width: 42ch; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: #4a5b67;">De 2 à plus de 500 personnes, pour vos réunions, séminaires, formations et afterworks.</p>
-      </div>
+      </blockquote>
+      <p data-reveal data-reveal-delay="120" data-sanity-field="subtitle" style="margin: clamp(26px, 4vw, 40px) 0 0; padding-left: clamp(24px, 3.5vw, 44px); max-width: 46ch; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: #4a5b67;">De 2 à plus de 500 personnes, pour vos réunions, séminaires, formations et afterworks.</p>
     </div>
   </div>
 </section>
