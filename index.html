@@ -13,11 +13,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500;600&family=Vollkorn:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
   <style>
     html, body { margin: 0; padding: 0; background: #f7ebdf; }
+    /* dc-runtime nests content in a viewport-height wrapper which confines position:sticky — let it grow to content height so the section dock can stick. */
+    html, body, #dc-root, #dc-root > div { height: auto !important; min-height: 100vh; }
     * { box-sizing: border-box; }
     image-slot { display: block; width: 100%; height: 100%; }
     a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid #f5ac3c; outline-offset: 3px; }
     ::selection { background: rgba(245,172,60,0.35); }
     [data-rail]::-webkit-scrollbar { display: none; }
+    #section-dock > div::-webkit-scrollbar { display: none; }
+    section[id] { scroll-margin-top: 112px; }
+    .dock-link { position: relative; white-space: nowrap; padding: 15px 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px; letter-spacing: -0.01em; color: #8a98a1; text-decoration: none; transition: color 200ms ease; }
+    .dock-link::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #d8902a; transform: scaleX(0); transform-origin: left; transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1); }
+    .dock-link:hover { color: #214856; }
+    .dock-link[data-active="true"] { color: #214856; }
+    .dock-link[data-active="true"]::after { transform: scaleX(1); }
+    .dock-link:focus-visible { outline: 2px solid #d8902a; outline-offset: -2px; border-radius: 4px; }
+    @media (max-width: 980px) { #section-dock { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .dock-link::after { transition: none; } }
     @keyframes curtain-lift { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
     @keyframes line-up { from { transform: translateY(112%); } to { transform: translateY(0); } }
     @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -113,10 +125,18 @@
       <a href="#contact" data-sanity-field="cta" style="display: inline-flex; align-items: center; gap: 10px; background: #f5ac3c; color: #214856; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; padding: 17px 30px; border-radius: 999px; text-decoration: none; transition: background 220ms cubic-bezier(0.22,0.61,0.36,1), gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28; gap: 16px;">Mon devis en 2 minutes <span aria-hidden="true">→</span></a>
     </div>
   </div>
-  <div aria-hidden="true" style="position: absolute; bottom: 28px; left: 50%; margin-left: -0.5px; z-index: 3; width: 1px; height: 52px; overflow: hidden;">
-    <div data-anim style="width: 1px; height: 100%; background: rgba(253,247,238,0.65); animation: scroll-line 2.4s cubic-bezier(0.65, 0, 0.35, 1) 1.4s infinite;"></div>
-  </div>
 </section>
+
+<nav id="section-dock" aria-label="Sections de la page" style="position: sticky; top: 56px; z-index: 50; background: rgba(253,247,238,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(33,72,86,0.1);">
+  <div style="max-width: 1320px; margin: 0 auto; display: flex; align-items: center; gap: 2px; overflow-x: auto; padding: 0 clamp(20px, 5vw, 48px); scrollbar-width: none;">
+    <a class="dock-link" href="#experiences" data-target="experiences">Expériences</a>
+    <a class="dock-link" href="#lieux" data-target="lieux">Nos lieux</a>
+    <a class="dock-link" href="#galerie" data-target="galerie">Galerie</a>
+    <a class="dock-link" href="#temoignages" data-target="temoignages">Références</a>
+    <a class="dock-link" href="#actualites" data-target="actualites">Actualités</a>
+    <a class="dock-link" href="#contact" data-target="contact">Contact</a>
+  </div>
+</nav>
 
 <section data-sanity-block="sharedLogoCloud" data-screen-label="03 Preuve" style="background: #fdf7ee; border-top: 1px solid rgba(33,72,86,0.07); border-bottom: 1px solid rgba(33,72,86,0.07); padding: clamp(38px, 5vw, 56px) 0;">
   <p data-reveal data-sanity-field="title" style="max-width: 900px; margin: 0 auto clamp(28px, 3.5vw, 44px); padding: 0 24px; text-align: center; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.4; color: #214856;">Déjà plus de <span style="font-weight: 700; color: #d8902a; white-space: nowrap; font-variant-numeric: lining-nums;">1 million</span> de participants accueillis dans 3 pays.</p>
@@ -184,7 +204,7 @@
   </div>
 </section>
 
-<section data-screen-label="06 Galerie" style="background: #efe1d0; padding: clamp(52px, 6.5vw, 84px) 0;">
+<section id="galerie" data-screen-label="06 Galerie" style="background: #efe1d0; padding: clamp(52px, 6.5vw, 84px) 0;">
   <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
     <div class="pw-grid">
       <sc-for list="{{ gallery }}" as="ph" hint-placeholder-count="24">
@@ -471,6 +491,23 @@ class Component extends DCLogic {
         edgeState();
       }
     });
+
+    const dockLinks = Array.from(document.querySelectorAll('.dock-link'));
+    if (dockLinks.length) {
+      const spy = () => {
+        const probe = window.scrollY + 140;
+        let activeId = dockLinks[0].getAttribute('data-target');
+        dockLinks.forEach((lnk) => {
+          const el = document.getElementById(lnk.getAttribute('data-target'));
+          if (el && el.offsetTop <= probe) activeId = lnk.getAttribute('data-target');
+        });
+        dockLinks.forEach((lnk) => lnk.setAttribute('data-active', lnk.getAttribute('data-target') === activeId ? 'true' : 'false'));
+      };
+      spy();
+      window.addEventListener('scroll', spy, { passive: true });
+      window.addEventListener('resize', spy);
+      this._cleanup.push(() => { window.removeEventListener('scroll', spy); window.removeEventListener('resize', spy); });
+    }
 
     this._startRotation();
   }
