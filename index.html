@@ -126,9 +126,8 @@
   <div class="xp-grid" style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: stretch;">
     <div class="xp-left" data-reveal style="display: flex; flex-direction: column;">
       <div>
-        <p style="margin: 0 0 18px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #4a5b67;"><span aria-hidden="true" style="width: 24px; height: 2px; background: #f5ac3c;"></span>Nos expériences</p>
-        <h2 data-sanity-field="title" style="margin: 0 0 22px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 3.6vw, 3.1rem); line-height: 1.08; letter-spacing: -0.01em; color: #214856;">Les expériences Comet</h2>
-        <p data-sanity-field="subtitle" style="margin: 0; max-width: 30ch; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: #4a5b67;">Des lieux adaptés à tout type d’événement, de 2 à +500 personnes.</p>
+        <p data-sanity-field="title" style="margin: 0 0 22px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #4a5b67;"><span aria-hidden="true" style="width: 24px; height: 2px; background: #f5ac3c;"></span>Les expériences Comet</p>
+        <p data-sanity-field="subtitle" style="margin: 0; max-width: 26ch; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em; color: #214856;">Des lieux adaptés à tout type d’événement, de 2 à +500 personnes.</p>
       </div>
       <a href="https://comet-next-web.vercel.app/lieux" data-sanity-field="cta" style="align-self: flex-start; margin-top: clamp(28px, 4vw, 44px); display: inline-flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #214856; text-decoration: none; padding: 14px 26px; border: 1.5px solid rgba(33,72,86,0.28); border-radius: 999px; transition: border-color 220ms cubic-bezier(0.22,0.61,0.36,1), background 220ms, gap 220ms;" style-hover="border-color: #f5ac3c; background: rgba(245,172,60,0.1); gap: 15px;">Découvrir les lieux Comet <span aria-hidden="true">→</span></a>
     </div>
@@ -485,8 +484,8 @@ class Component extends DCLogic {
       logosLoop: this.logos.concat(this.logos).map((l) => ({ name: l.name, h: l.h, src: C + l.file + '?w=260&fit=max&auto=format' })),
       experiences: [
         { title: 'Réunion', sub: 'Séminaire, formation, comité de direction, atelier…', href: 'https://comet-next-web.vercel.app/solution/meetings', slot: 'exp-reunions', src: C + '88b4c4881fb8c51e111d7c6e81e96c953e40e28c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · réunion' },
-        { title: 'Événement', sub: 'Convention, conférence, assemblée générale, salon', href: 'https://comet-next-web.vercel.app/solution/events', slot: 'exp-evenements', src: C + '36bdd602d92e0582519d5bf58c3bc2c3a141229c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · événement' },
-        { title: 'Soirée', sub: 'Afterwork, cocktail, dîner assis, summer party', href: 'https://comet-next-web.vercel.app/solution/soirees', slot: 'exp-soirees', src: C + '16c18e4f227d0fed0113df06638b9bc11db60b5c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · soirée' },
+        { title: 'Événement', sub: 'Convention, conférence, assemblée générale, salon…', href: 'https://comet-next-web.vercel.app/solution/events', slot: 'exp-evenements', src: C + '36bdd602d92e0582519d5bf58c3bc2c3a141229c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · événement' },
+        { title: 'Soirée', sub: 'Afterwork, cocktail, dîner assis, summer party…', href: 'https://comet-next-web.vercel.app/solution/soirees', slot: 'exp-soirees', src: C + '16c18e4f227d0fed0113df06638b9bc11db60b5c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · soirée' },
       ],
       lieux: [
         { name: 'Comet Étoile', city: 'Paris 16e', slot: 'lieu-etoile', href: 'https://comet-next-web.vercel.app/lieux/comet-etoile', src: C + '05e798b810d4c7f961f2209f78186766d9e8360c-8400x5600.jpg?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Étoile' },
