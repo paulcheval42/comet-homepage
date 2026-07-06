@@ -30,6 +30,37 @@
     }
     /* Hero title: force max 2 lines above mobile so it never crowds the visual */
     @media (min-width: 680px) { #hero h1 > span > span { white-space: nowrap; } }
+    /* Experiences: Qonto-style expanding cards */
+    .xp-card { position: relative; display: block; flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 24px; background: #24505f; text-decoration: none; transition: flex-grow 560ms cubic-bezier(0.22,0.61,0.36,1); }
+    .xp-img { position: absolute; inset: 0; display: block; transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform; }
+    .xp-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,45,54,0.82) 0%, rgba(20,45,54,0.34) 46%, rgba(20,45,54,0.04) 78%); pointer-events: none; }
+    .xp-arrow { position: absolute; top: 18px; right: 18px; width: 40px; height: 40px; border-radius: 999px; background: rgba(253,247,238,0.16); backdrop-filter: blur(4px); color: #fdf7ee; font-size: 18px; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.85); transition: opacity 420ms ease, transform 420ms ease; }
+    .xp-body { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(20px, 2vw, 30px); display: flex; flex-direction: column; }
+    .xp-title { font-family: 'Vollkorn', serif; font-weight: 600; color: #fdf7ee; line-height: 1.02; letter-spacing: -0.01em; font-size: clamp(1.25rem, 1.6vw, 1.7rem); transition: font-size 520ms cubic-bezier(0.22,0.61,0.36,1); }
+    .xp-sub { margin-top: 10px; max-height: 0; opacity: 0; overflow: hidden; transform: translateY(6px); font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(13.5px, 1vw, 15px); line-height: 1.55; color: rgba(253,247,238,0.9); transition: opacity 420ms ease, max-height 520ms ease, transform 420ms ease; }
+    /* active card = first by default, or whichever is hovered */
+    .xp-card:first-child { flex-grow: 2.5; }
+    .xp-card:first-child .xp-title { font-size: clamp(1.9rem, 2.7vw, 2.6rem); }
+    .xp-card:first-child .xp-sub { max-height: 140px; opacity: 1; transform: none; }
+    .xp-card:first-child .xp-arrow { opacity: 1; transform: none; }
+    .xp-row:hover .xp-card { flex-grow: 1; }
+    .xp-row:hover .xp-card .xp-title { font-size: clamp(1.25rem, 1.6vw, 1.7rem); }
+    .xp-row:hover .xp-card .xp-sub { max-height: 0; opacity: 0; transform: translateY(6px); }
+    .xp-row:hover .xp-card .xp-arrow { opacity: 0; transform: scale(0.85); }
+    .xp-row .xp-card:hover { flex-grow: 2.5; }
+    .xp-row .xp-card:hover .xp-img { transform: scale(1.05); }
+    .xp-row .xp-card:hover .xp-title { font-size: clamp(1.9rem, 2.7vw, 2.6rem); }
+    .xp-row .xp-card:hover .xp-sub { max-height: 140px; opacity: 1; transform: none; }
+    .xp-row .xp-card:hover .xp-arrow { opacity: 1; transform: none; }
+    .xp-card:focus-visible { outline: 3px solid #f5ac3c; outline-offset: 3px; }
+    @media (max-width: 820px) {
+      .xp-grid { grid-template-columns: 1fr !important; }
+      .xp-row { flex-direction: column !important; height: auto !important; }
+      .xp-card, .xp-card:first-child { flex: none !important; height: 190px; }
+      .xp-title, .xp-card:first-child .xp-title, .xp-row .xp-card:hover .xp-title { font-size: 1.7rem !important; }
+      .xp-sub, .xp-card:first-child .xp-sub { max-height: 140px !important; opacity: 1 !important; transform: none !important; }
+      .xp-arrow, .xp-card:first-child .xp-arrow { opacity: 1 !important; transform: none !important; }
+    }
   </style>
 </helmet>
 
@@ -91,30 +122,29 @@
   </div>
 </section>
 
-<section id="experiences" data-sanity-block="sharedCards" data-sanity-variant="chapters" data-screen-label="04 Expériences" style="background: #f7ebdf; padding: clamp(90px, 12vw, 160px) 0 clamp(60px, 8vw, 110px);">
-  <div data-reveal style="max-width: 1320px; margin: 0 auto clamp(48px, 6vw, 80px); padding: 0 clamp(20px, 5vw, 48px);">
-    <p style="margin: 0 0 16px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #4a5b67;"><span aria-hidden="true" style="width: 24px; height: 2px; background: #f5ac3c;"></span>Nos expériences</p>
-    <h2 data-sanity-field="title" style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; letter-spacing: -0.01em; color: #214856; max-width: 14em;">Les expériences Comet</h2>
-  </div>
-  <div style="padding: 0 clamp(10px, 1.5vw, 24px); display: flex; flex-direction: column; gap: clamp(14px, 2vw, 24px);">
-    <sc-for list="{{ experiences }}" as="exp" hint-placeholder-count="3">
-      <article data-reveal data-sanity-field="card" data-screen-label="Expérience {{ exp.title }}" style="position: relative; width: 100%; height: min(70vh, 720px); overflow: hidden; border-radius: 28px; background: #24505f;">
-        <div data-parallax style="position: absolute; top: -8%; bottom: -8%; left: 0; right: 0; will-change: transform;">
-          <div style="position: absolute; inset: 0; transition: transform 500ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform;" style-hover="transform: scale(1.03);">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ exp.slot }}" shape="rect" src="{{ exp.src }}" placeholder="{{ exp.ph }}" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
-          </div>
-        </div>
-        <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(33,72,86,0.64) 0%, rgba(33,72,86,0.14) 44%, rgba(33,72,86,0) 62%); pointer-events: none;"></div>
-        <div style="position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: {{ exp.justify }}; padding: clamp(28px, 5vw, 72px); pointer-events: none;">
-          <div style="max-width: 560px;">
-            <p style="margin: 0 0 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.16em; color: #f5ac3c;">{{ exp.n }}</p>
-            <h3 style="margin: 0 0 12px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1.05; color: #fdf7ee;">{{ exp.title }}</h3>
-            <p style="margin: 0 0 20px; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.6; color: rgba(253,247,238,0.88);">{{ exp.desc }}</p>
-            <a href="{{ exp.href }}" style="pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: #fdf7ee; text-decoration: none; border-bottom: 1px solid rgba(253,247,238,0.4); padding-bottom: 4px; transition: gap 220ms cubic-bezier(0.22,0.61,0.36,1), border-color 220ms;" style-hover="gap: 14px; border-bottom-color: #f5ac3c;">{{ exp.cta }} <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-      </article>
-    </sc-for>
+<section id="experiences" data-sanity-block="sharedCards" data-sanity-variant="industries" data-screen-label="04 Expériences" style="background: #f7ebdf; padding: clamp(80px, 11vw, 150px) 0;">
+  <div class="xp-grid" style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: stretch;">
+    <div class="xp-left" data-reveal style="display: flex; flex-direction: column;">
+      <div>
+        <p style="margin: 0 0 18px; display: flex; align-items: center; gap: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #4a5b67;"><span aria-hidden="true" style="width: 24px; height: 2px; background: #f5ac3c;"></span>Nos expériences</p>
+        <h2 data-sanity-field="title" style="margin: 0 0 22px; font-family: 'Vollkorn', serif; font-weight: 600; font-size: clamp(2rem, 3.6vw, 3.1rem); line-height: 1.08; letter-spacing: -0.01em; color: #214856;">Les expériences Comet</h2>
+        <p data-sanity-field="subtitle" style="margin: 0; max-width: 30ch; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.7; color: #4a5b67;">Des lieux adaptés à tout type d’événement, de 2 à +500 personnes.</p>
+      </div>
+      <a href="https://comet-next-web.vercel.app/lieux" data-sanity-field="cta" style="align-self: flex-start; margin-top: clamp(28px, 4vw, 44px); display: inline-flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #214856; text-decoration: none; padding: 14px 26px; border: 1.5px solid rgba(33,72,86,0.28); border-radius: 999px; transition: border-color 220ms cubic-bezier(0.22,0.61,0.36,1), background 220ms, gap 220ms;" style-hover="border-color: #f5ac3c; background: rgba(245,172,60,0.1); gap: 15px;">Découvrir les lieux Comet <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="xp-row" data-reveal style="display: flex; gap: clamp(12px, 1.4vw, 18px); height: clamp(430px, 58vh, 600px);">
+      <sc-for list="{{ experiences }}" as="exp" hint-placeholder-count="3">
+        <a class="xp-card" href="{{ exp.href }}" data-sanity-field="card" data-screen-label="Expérience {{ exp.title }}" aria-label="{{ exp.title }} — {{ exp.sub }}">
+          <span class="xp-img" aria-hidden="true"><x-import component-from-global-scope="image-slot" from="./image-slot.js" id="{{ exp.slot }}" shape="rect" src="{{ exp.src }}" placeholder="{{ exp.ph }}" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import></span>
+          <span class="xp-scrim" aria-hidden="true"></span>
+          <span class="xp-arrow" aria-hidden="true">↗</span>
+          <span class="xp-body">
+            <span class="xp-title">{{ exp.title }}</span>
+            <span class="xp-sub">{{ exp.sub }}</span>
+          </span>
+        </a>
+      </sc-for>
+    </div>
   </div>
 </section>
 
@@ -454,9 +484,9 @@ class Component extends DCLogic {
       ],
       logosLoop: this.logos.concat(this.logos).map((l) => ({ name: l.name, h: l.h, src: C + l.file + '?w=260&fit=max&auto=format' })),
       experiences: [
-        { n: '01', title: 'Réunions', desc: 'Journées d’étude, séminaires et formations, comités de direction, team building, ateliers, kick-off.', cta: 'Réserver une journée d’étude', href: 'https://comet-next-web.vercel.app/solution/meetings', justify: 'flex-start', slot: 'exp-reunions', src: C + '88b4c4881fb8c51e111d7c6e81e96c953e40e28c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · salle de réunion' },
-        { n: '02', title: 'Événements', desc: 'Conventions, conférences et assemblées générales, salons, lancements de produit, remises de prix.', cta: 'Organiser un événement', href: 'https://comet-next-web.vercel.app/solution/events', justify: 'flex-end', slot: 'exp-evenements', src: C + '36bdd602d92e0582519d5bf58c3bc2c3a141229c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · auditorium' },
-        { n: '03', title: 'Soirées', desc: 'Afterworks, cocktails et dîners assis, summer parties, soirées de fin d’année, networking.', cta: 'Privatiser un espace', href: 'https://comet-next-web.vercel.app/solution/soirees', justify: 'flex-start', slot: 'exp-soirees', src: C + '16c18e4f227d0fed0113df06638b9bc11db60b5c-2228x1519.png?rect=0,134,2228,1253&w=1800&auto=format', ph: 'Photo 16/9 · soirée rooftop' },
+        { title: 'Réunion', sub: 'Séminaire, formation, comité de direction, atelier…', href: 'https://comet-next-web.vercel.app/solution/meetings', slot: 'exp-reunions', src: C + '88b4c4881fb8c51e111d7c6e81e96c953e40e28c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · réunion' },
+        { title: 'Événement', sub: 'Convention, conférence, assemblée générale, salon', href: 'https://comet-next-web.vercel.app/solution/events', slot: 'exp-evenements', src: C + '36bdd602d92e0582519d5bf58c3bc2c3a141229c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · événement' },
+        { title: 'Soirée', sub: 'Afterwork, cocktail, dîner assis, summer party', href: 'https://comet-next-web.vercel.app/solution/soirees', slot: 'exp-soirees', src: C + '16c18e4f227d0fed0113df06638b9bc11db60b5c-2228x1519.png?w=1000&h=1300&fit=crop&auto=format', ph: 'Photo · soirée' },
       ],
       lieux: [
         { name: 'Comet Étoile', city: 'Paris 16e', slot: 'lieu-etoile', href: 'https://comet-next-web.vercel.app/lieux/comet-etoile', src: C + '05e798b810d4c7f961f2209f78186766d9e8360c-8400x5600.jpg?w=900&h=1125&fit=crop&auto=format', ph: 'Photo 4/5 · Comet Étoile' },
