@@ -30,6 +30,11 @@
     .dock-link:focus-visible { outline: 2px solid #d8902a; outline-offset: -2px; border-radius: 4px; }
     @media (max-width: 980px) { #section-dock { display: none; } }
     @media (prefers-reduced-motion: reduce) { .dock-link::after { transition: none; } }
+    /* Footer navy grid */
+    .ft-grid { display: grid; grid-template-columns: minmax(260px, 1.25fr) repeat(4, minmax(140px, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start; }
+    .ft-grid input::placeholder { color: #8a98a1; }
+    @media (max-width: 1080px) { .ft-grid { grid-template-columns: 1fr 1fr; } .ft-grid > div:first-child { grid-column: 1 / -1; } }
+    @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
     @keyframes curtain-lift { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
     @keyframes line-up { from { transform: translateY(112%); } to { transform: translateY(0); } }
     @keyframes fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -142,12 +147,15 @@
 <header data-screen-label="Header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 60; background-color: {{ headerBg }}; backdrop-filter: {{ headerBlur }}; box-shadow: {{ headerShadow }}; transition: background-color 320ms cubic-bezier(0.22,0.61,0.36,1), box-shadow 320ms cubic-bezier(0.22,0.61,0.36,1);">
   <div style="max-width: 1320px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px clamp(20px, 5vw, 48px);">
     <a href="#hero" style="display: block;"><img src="assets/logo-comet.svg" alt="Comet Meetings" style="height: 24px; display: block;"></a>
-    <nav aria-label="Navigation principale" style="display: flex; gap: clamp(18px, 3vw, 36px); flex-wrap: wrap; justify-content: center;">
-      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="5">
-        <a href="{{ l.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; color: {{ headerColor }}; text-decoration: none; transition: opacity 140ms;" style-hover="opacity: 0.7;">{{ l.label }}</a>
+    <nav aria-label="Navigation principale" style="display: flex; gap: clamp(16px, 2.6vw, 34px); flex-wrap: wrap; justify-content: center;">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="4">
+        <a href="{{ l.href }}" style="display: inline-flex; align-items: center; gap: 5px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14.5px; color: {{ headerColor }}; text-decoration: none; transition: opacity 140ms;" style-hover="opacity: 0.7;">{{ l.label }}<sc-if value="{{ l.chev }}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 2px; opacity: 0.85;"><path d="m6 9 6 6 6-6"/></svg></sc-if></a>
       </sc-for>
     </nav>
-    <a href="tel:+33184806060" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; color: {{ headerColor }}; text-decoration: none; white-space: nowrap;">01 84 80 60 60</a>
+    <div style="display: flex; align-items: center; gap: clamp(14px, 2vw, 26px);">
+      <span style="display: inline-flex; align-items: center; gap: 5px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: {{ headerColor }};">FR<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 2px; opacity: 0.85;"><path d="m6 9 6 6 6-6"/></svg></span>
+      <a href="#contact" data-sanity-field="cta" style="display: inline-flex; align-items: center; background: #f5ac3c; color: #214856; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14.5px; padding: 12px 26px; border-radius: 999px; text-decoration: none; white-space: nowrap; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28;">Réserver</a>
+    </div>
   </div>
 </header>
 
@@ -377,42 +385,65 @@
   </div>
 </section>
 
-<footer data-sanity-block="sharedColumns" data-screen-label="09 Footer" style="background: #f7ebdf; border-top: 1px solid rgba(33,72,86,0.14); padding: clamp(48px, 6vw, 72px) clamp(20px, 5vw, 48px) 40px;">
+<section data-sanity-block="sharedLinkList" data-sanity-variant="seoKeywords" data-screen-label="10 Expériences favorites" style="background: #fdf7ee; padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 48px);">
   <div style="max-width: 1320px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: minmax(200px, 1.3fr) repeat(auto-fit, minmax(170px, 1fr)); gap: clamp(28px, 4vw, 56px); align-items: start;">
+    <h2 style="margin: 0 0 clamp(28px, 4vw, 44px); font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.08; letter-spacing: -0.02em; color: #1a2730;">Vos expériences favorites</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(24px, 3vw, 48px); align-items: start;">
+      <sc-for list="{{ footerSeo }}" as="col" hint-placeholder-count="4">
+        <div data-sanity-block="sharedLinkList">
+          <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; color: #214856;">{{ col.title }}</p>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
+              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 15px; color: #1a2730; text-decoration: none; transition: color 140ms;" style-hover="color: #d8902a;">{{ lk.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<footer data-sanity-block="sharedColumns" data-screen-label="11 Footer" style="background: #214856; padding: clamp(56px, 7vw, 88px) clamp(20px, 5vw, 48px) 36px;">
+  <div style="max-width: 1320px; margin: 0 auto;">
+    <div class="ft-grid">
       <div>
-        <img src="assets/logo-comet.svg" alt="Comet Meetings" style="height: 22px; display: block; margin-bottom: 16px;">
-        <p style="margin: 0; font-family: 'Vollkorn', serif; font-weight: 500; font-size: 15px; line-height: 1.5; color: rgba(33,72,86,0.8); max-width: 18em;">Rassembler les humains dans un monde qui les éloigne.</p>
+        <img src="assets/logo-comet-alt.svg" alt="Comet Meetings" style="height: 44px; display: block;">
+        <p style="margin: 22px 0 0; max-width: 22em; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 17px; line-height: 1.55; color: #fdf7ee;"><em style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #f5ac3c;">Rassembler</em> les humains dans un monde qui les éloigne.</p>
+        <p style="margin: 26px 0 10px; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14.5px; color: rgba(253,247,238,0.85);">Inscrivez-vous à notre newsletter</p>
+        <div style="display: flex; align-items: center; gap: 10px; max-width: 380px;">
+          <input type="email" placeholder="Entrez votre email" aria-label="Votre adresse email" style="flex: 1 1 auto; min-width: 0; padding: 14px 20px; border-radius: 999px; border: none; background: #ffffff; font-family: 'Poppins', sans-serif; font-size: 14px; color: #214856;">
+          <button type="button" aria-label="S’inscrire à la newsletter" style="flex: none; width: 46px; height: 46px; border-radius: 999px; border: none; background: #f5ac3c; color: #214856; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+        </div>
+        <div style="margin-top: 28px; display: flex; align-items: center; gap: 13px;">
+          <a href="https://www.linkedin.com/company/comet-meetings" target="_blank" rel="noopener" aria-label="Comet sur LinkedIn" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(253,247,238,0.4); color: #fdf7ee; display: flex; align-items: center; justify-content: center; transition: border-color 200ms;" style-hover="border-color: #f5ac3c;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6Z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.instagram.com/cometmeetings" target="_blank" rel="noopener" aria-label="Comet sur Instagram" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(253,247,238,0.4); color: #fdf7ee; display: flex; align-items: center; justify-content: center; transition: border-color 200ms;" style-hover="border-color: #f5ac3c;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+          <a href="https://www.facebook.com/cometmeetings" target="_blank" rel="noopener" aria-label="Comet sur Facebook" style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(253,247,238,0.4); color: #fdf7ee; display: flex; align-items: center; justify-content: center; transition: border-color 200ms;" style-hover="border-color: #f5ac3c;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.bcorporation.net/" target="_blank" rel="noopener" aria-label="Comet, entreprise certifiée B Corp" style="margin-left: 12px; display: block;"><svg width="52" height="84" viewBox="0 0 56 88" fill="none" aria-hidden="true"><rect x="1" y="1" width="54" height="86" rx="6" stroke="rgba(253,247,238,0.8)" stroke-width="1.5"/><text x="28" y="13" text-anchor="middle" font-family="'Poppins',sans-serif" font-size="6" fill="rgba(253,247,238,0.8)">Entreprise</text><circle cx="28" cy="34" r="14" stroke="rgba(253,247,238,0.9)" stroke-width="1.8"/><text x="28" y="34" dy="0.36em" text-anchor="middle" font-family="'Vollkorn',serif" font-weight="700" font-size="19" fill="rgba(253,247,238,0.95)">B</text><text x="28" y="59" text-anchor="middle" font-family="'Poppins',sans-serif" font-weight="600" font-size="7.5" fill="rgba(253,247,238,0.9)">Certifiée</text><text x="28" y="70" text-anchor="middle" font-family="'Poppins',sans-serif" font-size="5.4" fill="rgba(253,247,238,0.65)">En savoir plus sur</text><text x="28" y="79" text-anchor="middle" font-family="'Poppins',sans-serif" font-weight="600" font-size="6.4" fill="rgba(253,247,238,0.85)">bcorp.com</text></svg></a>
+        </div>
       </div>
       <sc-for list="{{ footerMain }}" as="col" hint-placeholder-count="3">
         <div data-sanity-block="sharedLinkList">
-          <p style="margin: 0 0 14px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(33,72,86,0.85);">{{ col.title }}</p>
-          <div style="display: flex; flex-direction: column; gap: 9px;">
+          <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #f5ac3c;">{{ col.title }}</p>
+          <div style="display: flex; flex-direction: column; gap: 11px;">
             <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
-              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(33,72,86,0.7); text-decoration: none; transition: color 140ms;" style-hover="color: #214856;">{{ lk.label }}</a>
+              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14.5px; line-height: 1.45; color: rgba(253,247,238,0.85); text-decoration: none; transition: color 140ms;" style-hover="color: #fdf7ee;">{{ lk.label }}</a>
             </sc-for>
           </div>
         </div>
       </sc-for>
-    </div>
-    <div style="margin-top: clamp(40px, 5vw, 56px); padding-top: clamp(28px, 4vw, 40px); border-top: 1px solid rgba(33,72,86,0.1); display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: clamp(24px, 3vw, 48px);">
-      <sc-for list="{{ footerSeo }}" as="col" hint-placeholder-count="4">
-        <div data-sanity-block="sharedLinkList">
-          <p style="margin: 0 0 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(33,72,86,0.7);">{{ col.title }}</p>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
-              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 13px; color: rgba(33,72,86,0.7); text-decoration: none; transition: color 140ms;" style-hover="color: #214856;">{{ lk.label }}</a>
-            </sc-for>
-          </div>
+      <div data-sanity-block="sharedLinkList">
+        <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: #f5ac3c;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 11px;">
+          <a href="tel:+33184806060" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14.5px; color: rgba(253,247,238,0.85); text-decoration: none; transition: color 140ms;" style-hover="color: #fdf7ee;">01 84 80 60 60</a>
+          <a href="mailto:contact-fr@comet.team" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 14.5px; overflow-wrap: anywhere; color: rgba(253,247,238,0.85); text-decoration: none; transition: color 140ms;" style-hover="color: #fdf7ee;">contact-fr@comet.team</a>
         </div>
-      </sc-for>
+      </div>
     </div>
-    <div style="margin-top: clamp(40px, 5vw, 56px); padding-top: 24px; border-top: 1px solid rgba(33,72,86,0.1); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55);">© 2026 Comet Meetings</p>
+    <div style="margin-top: clamp(44px, 6vw, 64px); padding-top: 24px; border-top: 1px solid rgba(253,247,238,0.15); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(253,247,238,0.55);">© 2026 Comet Meetings</p>
       <div style="display: flex; gap: 20px;">
-        <a href="#" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">Mentions légales</a>
-        <a href="#" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">Politique de confidentialité</a>
-        <a href="mailto:contact-fr@comet.team" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(33,72,86,0.55); text-decoration: none;">contact-fr@comet.team</a>
+        <a href="https://comet-next-web.vercel.app/mentions-legales" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(253,247,238,0.55); text-decoration: none;" style-hover="color: #fdf7ee;">Mentions légales</a>
+        <a href="https://comet-next-web.vercel.app/politique-de-confidentialite" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 12px; color: rgba(253,247,238,0.55); text-decoration: none;" style-hover="color: #fdf7ee;">Politique de confidentialité</a>
       </div>
     </div>
   </div>
@@ -695,10 +726,10 @@ class Component extends DCLogic {
       headerLogoSrc: scrolled ? 'assets/logo-comet.svg' : 'assets/logo-comet-alt.svg',
       kenBurnsAnim: kb ? 'ken-burns 12s cubic-bezier(0.22, 0.61, 0.36, 1) forwards' : 'none',
       navLinks: [
-        { label: 'Nos lieux', href: '#lieux' },
-        { label: 'Les expériences', href: '#experiences' },
-        { label: 'Actualités', href: '#actualites' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'Nos lieux', href: '#lieux', chev: false },
+        { label: 'Nos expériences', href: '#experiences', chev: true },
+        { label: 'Pourquoi Comet ?', href: '#temoignages', chev: true },
+        { label: 'Ressources', href: '#actualites', chev: true },
       ],
       logosLoop: this.logos.concat(this.logos).map((l) => ({ name: l.name, h: l.h, src: C + l.file + '?w=260&fit=max&auto=format' })),
       experiences: [
