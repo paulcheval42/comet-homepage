@@ -24,11 +24,11 @@
     :root { --header-h: 78px; }
     section[id] { scroll-margin-top: calc(var(--header-h) + 58px); }
     .dock-link { position: relative; white-space: nowrap; padding: 15px 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px; letter-spacing: -0.01em; color: #8a98a1; text-decoration: none; transition: color 200ms ease; }
-    .dock-link::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #d8902a; transform: scaleX(0); transform-origin: left; transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1); }
+    .dock-link::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #f5ac3c; transform: scaleX(0); transform-origin: left; transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1); }
     .dock-link:hover { color: #214856; }
     .dock-link[data-active="true"] { color: #214856; }
     .dock-link[data-active="true"]::after { transform: scaleX(1); }
-    .dock-link:focus-visible { outline: 2px solid #d8902a; outline-offset: -2px; border-radius: 4px; }
+    .dock-link:focus-visible { outline: 2px solid #f5ac3c; outline-offset: -2px; border-radius: 4px; }
     @media (max-width: 980px) { #section-dock { display: none; } }
     @media (prefers-reduced-motion: reduce) { .dock-link::after { transition: none; } }
     /* Footer navy grid */
@@ -81,7 +81,7 @@
     .rv-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(20,45,54,0.14); }
     .rv-img { transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform; }
     .rv-card:hover .rv-img { transform: scale(1.05); }
-    .rv-card:focus-visible { outline: 2px solid #d8902a; outline-offset: 2px; }
+    .rv-card:focus-visible { outline: 2px solid #f5ac3c; outline-offset: 2px; }
     /* Photo wall (reunion-style mosaic) */
     .pw-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .pw-item { margin: 0; overflow: hidden; border-radius: 20px; background: #efe1d0; box-shadow: 0 1px 3px rgba(20,45,54,0.06), inset 0 0 0 1px rgba(33,72,86,0.06); transition: box-shadow 300ms ease; }
@@ -203,7 +203,7 @@
 </nav>
 
 <section data-sanity-block="sharedLogoCloud" data-screen-label="03 Preuve" style="background: #fdf7ee; border-top: 1px solid rgba(33,72,86,0.07); border-bottom: 1px solid rgba(33,72,86,0.07); padding: clamp(38px, 5vw, 56px) 0;">
-  <p data-reveal data-sanity-field="title" style="max-width: 900px; margin: 0 auto clamp(28px, 3.5vw, 44px); padding: 0 24px; text-align: center; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.4; color: #214856;">Déjà plus de <span style="font-weight: 700; color: #d8902a; white-space: nowrap; font-variant-numeric: lining-nums;">1 million</span> de participants accueillis dans 3 pays.</p>
+  <p data-reveal data-sanity-field="title" style="max-width: 900px; margin: 0 auto clamp(28px, 3.5vw, 44px); padding: 0 24px; text-align: center; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); line-height: 1.4; color: #214856;">Déjà plus de <span style="font-style: italic; font-weight: 700; color: #f5ac3c; white-space: nowrap; font-variant-numeric: lining-nums;">1 million</span> de participants accueillis dans 3 pays.</p>
   <div data-sanity-field="logos" style="overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
     <div data-anim style="display: flex; align-items: center; gap: clamp(40px, 5.5vw, 76px); width: max-content; padding-right: clamp(40px, 5.5vw, 76px); animation: marquee 60s linear infinite;" style-hover="animation-play-state: paused;">
       <sc-for list="{{ logosLoop }}" as="lg" hint-placeholder-count="8">
@@ -217,8 +217,8 @@
   <div class="xp-grid" style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px); display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: stretch;">
     <div class="xp-left" data-reveal style="display: flex; flex-direction: column;">
       <div>
-        <p data-sanity-field="title" style="margin: 0 0 22px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Les expériences Comet</p>
-        <p data-sanity-field="subtitle" style="margin: 0; max-width: 26ch; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em; color: #214856;">Des lieux adaptés à tout type d’événement, de 2 à +500 personnes.</p>
+        <p data-sanity-field="title" style="margin: 0 0 22px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Les expériences Comet</p>
+        <p data-sanity-field="subtitle" style="margin: 0; max-width: 26ch; font-family: 'Vollkorn', serif; font-weight: 500; font-size: clamp(1.4rem, 2vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em; color: #214856;">Des lieux adaptés à <span style="font-style: italic; color: #f5ac3c;">tout type d’événement</span>, de 2 à +500 personnes.</p>
       </div>
       <a href="https://comet-next-web.vercel.app/lieux" data-sanity-field="cta" style="align-self: flex-start; margin-top: clamp(28px, 4vw, 44px); display: inline-flex; align-items: center; gap: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; color: #214856; text-decoration: none; padding: 14px 26px; border: 1.5px solid rgba(33,72,86,0.28); border-radius: 999px; transition: border-color 220ms cubic-bezier(0.22,0.61,0.36,1), background 220ms, gap 220ms;" style-hover="border-color: #f5ac3c; background: rgba(245,172,60,0.1); gap: 15px;">Découvrir les lieux Comet <span aria-hidden="true">→</span></a>
     </div>
@@ -242,8 +242,8 @@
   <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
     <div data-reveal style="margin-bottom: clamp(28px, 4vw, 44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
       <div style="max-width: 40em;">
-        <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Nos lieux</p>
-        <h2 data-sanity-field="title" style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">À Paris, Bruxelles et <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #d8902a;">Madrid</span></h2>
+        <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Nos lieux</p>
+        <h2 data-sanity-field="title" style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">À Paris, Bruxelles et <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #f5ac3c;">Madrid</span></h2>
       </div>
       <div style="display: flex; flex: none; gap: 10px;">
         <button data-rail-prev type="button" aria-label="Précédent" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(33,72,86,0.15); background: #ffffff; color: #214856; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1), border-color 200ms, color 200ms, opacity 200ms;" style-hover="background: #214856; border-color: #214856; color: #fdf7ee;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
@@ -262,7 +262,7 @@
         </span>
         <span style="display: block; padding: 20px;">
           <span style="display: block; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; color: #214856;">{{ lieu.name }}</span>
-          <span style="display: flex; align-items: center; gap: 6px; margin-top: 5px; font-family: 'Poppins', sans-serif; font-size: 13px; color: #4a5b67;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d8902a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>{{ lieu.city }}</span>
+          <span style="display: flex; align-items: center; gap: 6px; margin-top: 5px; font-family: 'Poppins', sans-serif; font-size: 13px; color: #4a5b67;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f5ac3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none;" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>{{ lieu.city }}</span>
         </span>
       </a>
     </sc-for>
@@ -273,8 +273,8 @@
 <section id="carte" data-sanity-block="sharedMap" data-screen-label="06 Carte" style="background: #f7ebdf; padding: clamp(56px, 7vw, 92px) 0;">
   <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
     <div data-reveal style="max-width: 40em; margin-bottom: clamp(28px, 4vw, 48px);">
-      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Le réseau parisien</p>
-      <h2 style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Comet à <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #d8902a;">Paris</span></h2>
+      <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Le réseau parisien</p>
+      <h2 style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Comet à <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #f5ac3c;">Paris</span></h2>
       <p style="margin: 16px 0 0; font-family: 'Poppins', sans-serif; font-weight: 400; font-size: clamp(15px, 1.2vw, 17px); line-height: 1.65; color: #4a5b67;">Huit adresses dans Paris et l’Ouest parisien, de 2 à +500 personnes.</p>
     </div>
     <div class="pmap-grid" data-reveal>
@@ -330,8 +330,8 @@
   <div style="max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 48px);">
     <div data-reveal style="margin-bottom: clamp(28px, 4vw, 44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;">
       <div style="max-width: 40em;">
-        <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Ils ont choisi Comet</p>
-        <h2 data-sanity-field="title" style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Leur événement, <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #d8902a;">raconté</span></h2>
+        <p style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Ils ont choisi Comet</p>
+        <h2 data-sanity-field="title" style="margin: 18px 0 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Leur événement, <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #f5ac3c;">raconté</span></h2>
       </div>
       <div style="display: flex; flex: none; gap: 10px;">
         <button data-rail-prev type="button" aria-label="Précédent" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(33,72,86,0.15); background: #ffffff; color: #214856; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms cubic-bezier(0.22,0.61,0.36,1), border-color 200ms, color 200ms, opacity 200ms;" style-hover="background: #214856; border-color: #214856; color: #fdf7ee;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
@@ -360,8 +360,8 @@
 <section id="actualites" data-sanity-block="sharedCards" data-sanity-variant="editorialList" data-screen-label="08 Actualités" style="background: #fdf7ee; padding: clamp(56px, 7vw, 92px) clamp(20px, 5vw, 48px);">
   <div style="max-width: 1100px; margin: 0 auto;">
     <div data-reveal style="margin-bottom: clamp(40px, 5vw, 64px);">
-      <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #d8902a;">Actualités</p>
-      <h2 data-sanity-field="title" style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Nos actualités <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #d8902a;">Comet</span></h2>
+      <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5ac3c;">Actualités</p>
+      <h2 data-sanity-field="title" style="margin: 0; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: clamp(2rem, 4.4vw, 3.5rem); line-height: 1.04; letter-spacing: -0.025em; color: #1a2730;">Nos actualités <span style="font-family: 'Vollkorn', serif; font-style: italic; font-weight: 600; color: #f5ac3c;">Comet</span></h2>
     </div>
     <sc-for list="{{ actus }}" as="a" hint-placeholder-count="3">
       <article data-reveal data-reveal-delay="{{ a.delay }}" data-sanity-field="card" style="display: grid; grid-template-columns: minmax(180px, 300px) 1fr; gap: clamp(20px, 4vw, 48px); align-items: center; padding: clamp(28px, 4vw, 44px) 0; border-top: 1px solid rgba(33,72,86,0.14);">
@@ -405,7 +405,7 @@
           <p style="margin: 0 0 16px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 17px; color: #214856;">{{ col.title }}</p>
           <div style="display: flex; flex-direction: column; gap: 12px;">
             <sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="5">
-              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 15px; color: #1a2730; text-decoration: none; transition: color 140ms;" style-hover="color: #d8902a;">{{ lk.label }}</a>
+              <a href="{{ lk.href }}" style="font-family: 'Poppins', sans-serif; font-weight: 400; font-size: 15px; color: #1a2730; text-decoration: none; transition: color 140ms;" style-hover="color: #f5ac3c;">{{ lk.label }}</a>
             </sc-for>
           </div>
         </div>
