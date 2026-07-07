@@ -21,7 +21,8 @@
     ::selection { background: rgba(245,172,60,0.35); }
     [data-rail]::-webkit-scrollbar { display: none; }
     #section-dock > div::-webkit-scrollbar { display: none; }
-    section[id] { scroll-margin-top: 112px; }
+    :root { --header-h: 78px; }
+    section[id] { scroll-margin-top: calc(var(--header-h) + 58px); }
     .dock-link { position: relative; white-space: nowrap; padding: 15px 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px; letter-spacing: -0.01em; color: #8a98a1; text-decoration: none; transition: color 200ms ease; }
     .dock-link::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #d8902a; transform: scaleX(0); transform-origin: left; transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1); }
     .dock-link:hover { color: #214856; }
@@ -95,7 +96,7 @@
     /* Paris map */
     .pmap-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
     .pmap-wrap { background: #fdf7ee; border: 1px solid rgba(33,72,86,0.08); border-radius: 28px; padding: clamp(16px, 3vw, 32px); }
-    @media (min-width: 821px) { .pmap-wrap { position: sticky; top: 126px; } }
+    @media (min-width: 821px) { .pmap-wrap { position: sticky; top: calc(var(--header-h) + 66px); } }
     .pin { cursor: pointer; transform-box: fill-box; transform-origin: 50% 50%; transition: transform 260ms cubic-bezier(0.34,1.5,0.5,1); outline: none; }
     .pin .td { transition: fill 200ms ease; }
     .pinpos { opacity: 0; }
@@ -183,7 +184,7 @@
   </div>
 </section>
 
-<nav id="section-dock" aria-label="Sections de la page" style="position: sticky; top: 56px; z-index: 50; background: rgba(253,247,238,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(33,72,86,0.1);">
+<nav id="section-dock" aria-label="Sections de la page" style="position: sticky; top: var(--header-h, 78px); z-index: 50; background: rgba(253,247,238,0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(33,72,86,0.1);">
   <div style="max-width: 1320px; margin: 0 auto; display: flex; align-items: center; gap: 2px; overflow-x: auto; padding: 0 clamp(20px, 5vw, 48px); scrollbar-width: none;">
     <a class="dock-link" href="#experiences" data-target="experiences">Les expériences</a>
     <a class="dock-link" href="#lieux" data-target="lieux">Nos lieux</a>
@@ -617,10 +618,21 @@ class Component extends DCLogic {
       }
     });
 
+    const headerEl = document.querySelector('header');
+    const setHeaderH = () => {
+      if (headerEl) document.documentElement.style.setProperty('--header-h', headerEl.offsetHeight + 'px');
+    };
+    setHeaderH();
+    window.addEventListener('resize', setHeaderH);
+    window.addEventListener('load', setHeaderH);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setHeaderH);
+    const hT = setTimeout(setHeaderH, 1800);
+    this._cleanup.push(() => { window.removeEventListener('resize', setHeaderH); window.removeEventListener('load', setHeaderH); clearTimeout(hT); });
+
     const dockLinks = Array.from(document.querySelectorAll('.dock-link'));
     if (dockLinks.length) {
       const spy = () => {
-        const probe = window.scrollY + 140;
+        const probe = window.scrollY + (headerEl ? headerEl.offsetHeight : 78) + 74;
         let activeId = dockLinks[0].getAttribute('data-target');
         dockLinks.forEach((lnk) => {
           const el = document.getElementById(lnk.getAttribute('data-target'));
