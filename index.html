@@ -154,6 +154,13 @@
 <section id="hero" data-sanity-block="sharedCoverHero" data-screen-label="01 Hero" style="position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: #1d3d49;">
   <div data-anim style="position: absolute; inset: 0; will-change: transform; animation: {{ kenBurnsAnim }};" style-hover="animation-play-state: paused;">
     <x-import component-from-global-scope="image-slot" from="./image-slot.js" data-sanity-field="image" id="hero-signature" shape="rect" src="https://cdn.sanity.io/images/g8jgfkf5/production/d9b36155b18116ba0e919251e7ba65ab6badc1a3-7005x4670.jpg?w=2400&amp;auto=format" placeholder="Photo signature pleine largeur" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
+    <span data-sanity-field="slides" aria-hidden="true">
+      <img data-hero-slide src="hero-media/hero-4.jpg" alt="Comet Cœur Défense — lounge panoramique" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+      <img data-hero-slide src="hero-media/hero-6.jpg" alt="Comet Bourse — le Plaza" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+      <img data-hero-slide src="hero-media/hero-1.jpg" alt="Comet Étoile — rooftop, vue tour Eiffel" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+      <img data-hero-slide src="hero-media/hero-7.jpg" alt="Comet Ternes — rooftop au coucher du soleil" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+      <img data-hero-slide src="hero-media/hero-3.jpg" alt="Comet — terrasse" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+    </span>
   </div>
   <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,39,48,0.72) 0%, rgba(15,39,48,0.28) 26%, rgba(15,39,48,0) 52%), rgba(242,209,188,0.22); pointer-events: none;"></div>
   <div data-curtain aria-hidden="true" style="position: absolute; inset: 0; background: #f7ebdf; z-index: 2; pointer-events: none; animation: curtain-lift 900ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;"></div>
@@ -595,6 +602,17 @@ class Component extends DCLogic {
       window.addEventListener('scroll', spy, { passive: true });
       window.addEventListener('resize', spy);
       this._cleanup.push(() => { window.removeEventListener('scroll', spy); window.removeEventListener('resize', spy); });
+    }
+
+    const heroSlides = Array.from(document.querySelectorAll('[data-hero-slide]'));
+    if (heroSlides.length && !this.reduced) {
+      let heroIdx = -1; // -1 = photo de base (image-slot)
+      const heroTick = () => {
+        heroIdx = heroIdx + 1 >= heroSlides.length ? -1 : heroIdx + 1;
+        heroSlides.forEach((el, i) => { el.style.opacity = i === heroIdx ? '1' : '0'; });
+      };
+      const heroIv = setInterval(heroTick, 5500);
+      this._cleanup.push(() => clearInterval(heroIv));
     }
 
     const pmap = document.getElementById('paris-map');
