@@ -50,6 +50,9 @@
     }
     /* Hero title: force max 2 lines above mobile so it never crowds the visual */
     @media (min-width: 680px) { #hero h1 > span > span { white-space: nowrap; } }
+    @media (max-width: 980px) { #hero { height: 72svh !important; min-height: 520px !important; } }
+    @media (max-width: 560px) { .hero-nav { display: none !important; } }
+    @media (prefers-reduced-motion: reduce) { [data-hero-slide] { transition: none !important; } }
     /* Experiences: Qonto-style expanding cards */
     .xp-card { position: relative; display: block; flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 24px; background: #24505f; text-decoration: none; transition: flex-grow 560ms cubic-bezier(0.22,0.61,0.36,1); }
     .xp-img { position: absolute; inset: 0; display: block; transition: transform 700ms cubic-bezier(0.22,0.61,0.36,1); will-change: transform; }
@@ -160,15 +163,15 @@
   </div>
 </header>
 
-<section id="hero" data-sanity-block="sharedCoverHero" data-screen-label="01 Hero" style="position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: #1d3d49;">
+<section id="hero" data-sanity-block="sharedCoverHero" data-screen-label="01 Hero" style="position: relative; height: 88svh; max-height: 980px; min-height: 660px; overflow: hidden; background: #1d3d49;">
   <div data-anim style="position: absolute; inset: 0; will-change: transform; animation: {{ kenBurnsAnim }};" style-hover="animation-play-state: paused;">
     <x-import component-from-global-scope="image-slot" from="./image-slot.js" data-sanity-field="image" id="hero-signature" shape="rect" src="https://cdn.sanity.io/images/g8jgfkf5/production/d9b36155b18116ba0e919251e7ba65ab6badc1a3-7005x4670.jpg?w=2400&amp;auto=format" placeholder="Photo signature pleine largeur" hint-size="100%,100%" style="position: absolute; inset: 0; width: 100%; height: 100%;"></x-import>
     <span data-sanity-field="slides" aria-hidden="true">
-      <img data-hero-slide src="hero-media/hero-4.jpg" alt="Comet Cœur Défense — lounge panoramique" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
-      <img data-hero-slide src="hero-media/hero-6.jpg" alt="Comet Bourse — le Plaza" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
-      <img data-hero-slide src="hero-media/hero-1.jpg" alt="Comet Étoile — rooftop, vue tour Eiffel" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
-      <img data-hero-slide src="hero-media/hero-7.jpg" alt="Comet Ternes — rooftop au coucher du soleil" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
-      <img data-hero-slide src="hero-media/hero-3.jpg" alt="Comet — terrasse" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1400ms ease;">
+      <img data-hero-slide src="hero-media/hero-4.jpg" alt="Comet Cœur Défense — lounge panoramique" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); will-change: transform, opacity; transition: opacity 1000ms ease-out, transform 1000ms ease-out;">
+      <img data-hero-slide src="hero-media/hero-6.jpg" alt="Comet Bourse — le Plaza" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); will-change: transform, opacity; transition: opacity 1000ms ease-out, transform 1000ms ease-out;">
+      <img data-hero-slide src="hero-media/hero-1.jpg" alt="Comet Étoile — rooftop, vue tour Eiffel" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); will-change: transform, opacity; transition: opacity 1000ms ease-out, transform 1000ms ease-out;">
+      <img data-hero-slide src="hero-media/hero-7.jpg" alt="Comet Ternes — rooftop au coucher du soleil" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); will-change: transform, opacity; transition: opacity 1000ms ease-out, transform 1000ms ease-out;">
+      <img data-hero-slide src="hero-media/hero-3.jpg" alt="Comet — terrasse" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); will-change: transform, opacity; transition: opacity 1000ms ease-out, transform 1000ms ease-out;">
     </span>
   </div>
   <div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,39,48,0.72) 0%, rgba(15,39,48,0.28) 26%, rgba(15,39,48,0) 52%), rgba(242,209,188,0.22); pointer-events: none;"></div>
@@ -181,6 +184,10 @@
     <div data-anim style="animation: fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) 800ms both;">
       <a href="#contact" data-sanity-field="cta" style="display: inline-flex; align-items: center; gap: 10px; background: #f5ac3c; color: #214856; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; padding: 17px 30px; border-radius: 999px; text-decoration: none; transition: background 220ms cubic-bezier(0.22,0.61,0.36,1), gap 220ms cubic-bezier(0.22,0.61,0.36,1);" style-hover="background: #e79c28; gap: 16px;">Mon devis en 2 minutes <span aria-hidden="true">→</span></a>
     </div>
+  </div>
+  <div class="hero-nav" style="position: absolute; right: 40px; bottom: 48px; z-index: 4; display: flex; gap: 10px;">
+    <button data-hero-prev type="button" aria-label="Photo précédente" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.45); background: rgba(15,39,48,0.25); color: #ffffff; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease;" style-hover="background: #ffffff; border-color: #ffffff; color: #0f2730;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button data-hero-next type="button" aria-label="Photo suivante" style="width: 50px; height: 50px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.45); background: rgba(15,39,48,0.25); color: #ffffff; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease;" style-hover="background: #ffffff; border-color: #ffffff; color: #0f2730;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
   </div>
 </section>
 
@@ -651,14 +658,34 @@ class Component extends DCLogic {
     }
 
     const heroSlides = Array.from(document.querySelectorAll('[data-hero-slide]'));
-    if (heroSlides.length && !this.reduced) {
-      let heroIdx = -1; // -1 = photo de base (image-slot)
-      const heroTick = () => {
-        heroIdx = heroIdx + 1 >= heroSlides.length ? -1 : heroIdx + 1;
-        heroSlides.forEach((el, i) => { el.style.opacity = i === heroIdx ? '1' : '0'; });
+    if (heroSlides.length) {
+      const heroTotal = heroSlides.length + 1; // position 0 = photo de base (image-slot)
+      let heroPos = 0;
+      let heroPaused = false;
+      const heroApply = () => {
+        heroSlides.forEach((el, i) => {
+          const on = i === heroPos - 1;
+          el.style.opacity = on ? '1' : '0';
+          el.style.transform = on ? 'scale(1)' : 'scale(1.05)';
+        });
       };
-      const heroIv = setInterval(heroTick, 5500);
-      this._cleanup.push(() => clearInterval(heroIv));
+      const heroGo = (n) => { heroPos = ((n % heroTotal) + heroTotal) % heroTotal; heroApply(); };
+      const hPrev = document.querySelector('[data-hero-prev]');
+      const hNext = document.querySelector('[data-hero-next]');
+      if (hPrev) { const f = () => heroGo(heroPos - 1); hPrev.addEventListener('click', f); this._cleanup.push(() => hPrev.removeEventListener('click', f)); }
+      if (hNext) { const f = () => heroGo(heroPos + 1); hNext.addEventListener('click', f); this._cleanup.push(() => hNext.removeEventListener('click', f)); }
+      const heroSec = document.getElementById('hero');
+      if (heroSec) {
+        const onEnter = () => { heroPaused = true; };
+        const onLeave = () => { heroPaused = false; };
+        heroSec.addEventListener('mouseenter', onEnter);
+        heroSec.addEventListener('mouseleave', onLeave);
+        this._cleanup.push(() => { heroSec.removeEventListener('mouseenter', onEnter); heroSec.removeEventListener('mouseleave', onLeave); });
+      }
+      if (!this.reduced) {
+        const heroIv = setInterval(() => { if (!heroPaused) heroGo(heroPos + 1); }, 5200);
+        this._cleanup.push(() => clearInterval(heroIv));
+      }
     }
 
     const pmap = document.getElementById('paris-map');
