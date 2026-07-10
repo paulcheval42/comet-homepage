@@ -23,6 +23,8 @@
     #section-dock > div::-webkit-scrollbar { display: none; }
     :root { --header-h: 78px; }
     section[id] { scroll-margin-top: calc(var(--header-h) + 58px); }
+    /* Maquette : seuls les liens du sommaire naviguent — le reste garde ses hovers mais n'emmène nulle part */
+    a:not(.dock-link) { cursor: default; }
     .dock-link { position: relative; white-space: nowrap; padding: 15px 16px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13.5px; letter-spacing: -0.01em; color: #8a98a1; text-decoration: none; transition: color 200ms ease; }
     .dock-link::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #f5ac3c; transform: scaleX(0); transform-origin: left; transition: transform 300ms cubic-bezier(0.22,0.61,0.36,1); }
     .dock-link:hover { color: #214856; }
@@ -595,6 +597,14 @@ class Component extends DCLogic {
         edgeState();
       }
     });
+
+    // Maquette : neutralise toute navigation sauf le sommaire (.dock-link)
+    const blockNav = (e) => {
+      const a = e.target && e.target.closest ? e.target.closest('a') : null;
+      if (a && !a.classList.contains('dock-link')) e.preventDefault();
+    };
+    document.addEventListener('click', blockNav, true);
+    this._cleanup.push(() => document.removeEventListener('click', blockNav, true));
 
     const headerEl = document.querySelector('header');
     const setHeaderH = () => {
